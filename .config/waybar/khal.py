@@ -1,5 +1,9 @@
 #!/usr/bin/env python
-
+# pip install lunar_python
+"""
+khal luanar calendar
+2024.05.13 by dralee
+"""
 import subprocess
 import datetime
 import json
