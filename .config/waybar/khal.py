@@ -4,9 +4,12 @@ import subprocess
 import datetime
 import json
 from html import escape
-from lunar_python import Lunar
+from lunar_python import Lunar, Solar
 from lunar_python.util import HolidayUtil
 
+print(datetime.date.today(), datetime.datetime.now())
+a = Solar.fromDate(datetime.datetime.now())
+print(a.getMonth())
 lunar = Lunar.fromYmd(1986, 4, 21)
 print(lunar.toFullString())
 print(lunar.getSolar().toFullString())
