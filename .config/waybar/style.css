@@ -201,6 +201,12 @@ button:hover {
     animation-direction: alternate;
 }
 
+#custom-khal {
+    color: #FF5F00;
+    padding: 3px 12px 3px 8px;
+    font-size: 15px;
+}
+
 #custom-weather {
     color: #5AB2FF;
 }
@@ -257,6 +263,7 @@ button:hover {
   font-size:14px;
   font-weight: bold;
   border-radius: 5px;
+  padding: 0 8px;
 }
 
 /*#workspaces button {

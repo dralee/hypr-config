@@ -89,7 +89,7 @@
 
     "cpu": {
         "interval": 5,
-        "format": "<span color='#1ba784'></span>  {usage}% ({load})", // Icon: microchip
+        "format": "<span color='#1ba784'></span>   {usage}% ({load})", // Icon: microchip
         "states": {
           "warning": 70,
           "critical": 90
@@ -108,7 +108,7 @@
 
     "memory": {
         "interval": 5,
-        "format": "<span color='#f28e16'>\uf4bc</span>  {}%", // Icon: memory
+        "format": "<span color='#f28e16'>\uf4bc</span>   {}%", // Icon: memory
         "states": {
             "warning": 70,
             "critical": 90
@@ -121,7 +121,7 @@
 	//"format-wifi": "<span color='#589df6'></span>  <span color='#12aa9c'> {essid}</span> {frequency} <span color='#589df6'>{signaldBm} dB</span> <span color='#589df6'>⇵</span> <span color='#e9ccd3'>{bandwidthUpBits}</span> <span color='#fb8b05'>/</span> <span color='#c6dfc8'>{bandwidthDownBits}</span>",
 	"format-wifi": "<span color='#589df6'></span>  <span color='#589d06'> ⇵</span> <span color='#e9ccd3'>{bandwidthUpBits}</span> <span color='#fb8b05'>/</span> <span color='#c6dfc8'>{bandwidthDownBits}</span>",
         //"format-ethernet": "  {ifname}: {ipaddr}/{cidr}", // Icon: ethernet
-        "format-ethernet": "<span color='#589df6'>\udb80\udd19</span>", // Icon: ethernet
+        "format-ethernet": "<span color='#589df6'>\udb80\udd19</span>  <span color='#589d06'> ⇵</span> <span color='#e9ccd3'>{bandwidthUpBits}</span> <span color='#fb8b05'>/</span> <span color='#c6dfc8'>{bandwidthDownBits}</span>", // Icon: ethernet
         "format-disconnected": "⚠  Disconnected",
         "tooltip-format": "{ifname}: {ipaddr}\n<span color='#12aa9c'>{essid}</span>({frequency}) <span color='#589df6'>{signaldBm} dB</span> "
     },
@@ -222,16 +222,16 @@
         "on-click": "playerctl play-pause",
     },
 
-"custom/khal": {
-    "format": "{}",
-    "tooltip": true,
-    "interval": 300,
-    "format-icons": {
-        "default": "what"
+    "custom/khal": {
+        "format": "{}",
+        "tooltip": true,
+        "interval": 300,
+        "format-icons": {
+            "default": "what"
+        },
+        "exec": "python ~/.config/waybar/khal.py",
+        "return-type": "json"
     },
-    "exec": "python ~/.config/waybar/khal.py",
-    "return-type": "json"
-},
 
     "bluetooth": {
 	"format": " {status}",
