@@ -19,15 +19,15 @@
     "height": 30,
 
     "modules-left": [
+	"custom/khal",
+	"clock",
         "hyprland/workspaces",
-        "hyprland/mode"
+        "hyprland/mode",
     ],
     "modules-center": [
-        "hyprland/window",
+        "hyprland/window"
         //"clock#date",
         //"clock#time",
-	"clock",
-	"custom/khal"
     ],
     "modules-right": [
         "tray",
@@ -157,7 +157,7 @@
 
     "hyprland/window": {
         "format": "{}",
-        //"max-length": 120
+        "max-length": 80,
 	"rewrite": {
 		"(.*) - Personal - Microsoft​ Edge": "<span color='#2DBDD0'>\udb80\udde9</span>   $1",
 		"(.*) - Google Chrome": "<span color='#FFD837'>\uf268</span>   $1",
