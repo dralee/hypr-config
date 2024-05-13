@@ -133,7 +133,15 @@
 
     "hyprland/window": {
         "format": "{}",
-        "max-length": 120
+        //"max-length": 120
+	"rewrite": {
+		"(.*) - Personal - Microsoft​ Edge": "<span color='#2DBDD0'>\udb80\udde9</span>   $1",
+		"(.*) - Google Chrome": "<span color='#FFD837'>\uf268</span>   $1",
+		"(.*) - Code - OSS": "<span color='#3C99D4'>\udb82\ude1e</span>  $1",
+		"(.*) - Typora": "<span color='#EAEAEA'>\ue73e</span>  $1",
+		"vim (.*)": "<span color='#C6C6C6'>\ue7c5</span>  $1",
+		"(.*) - fish": "<span color='#019A00'>\ue691</span>  $1",
+	}
     },
 
     "hyprland/workspaces": {
