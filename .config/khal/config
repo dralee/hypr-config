@@ -1,7 +1,7 @@
 [calendars]
 
 [[private]]
-path = /home/dralee/.local/share/khal/calendars/private
+path = $HOME/.local/share/khal/calendars/private
 type = calendar
 
 [locale]
