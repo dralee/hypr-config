@@ -265,7 +265,7 @@
         "format-icons": {
             "default": "what"
         },
-        "exec": "python ~/.config/waybar/khal.py",
+        "exec": "python ~/.config/waybar/scripts/khal.py",
         "return-type": "json"
     },
 
