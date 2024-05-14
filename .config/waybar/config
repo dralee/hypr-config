@@ -25,14 +25,14 @@
         "hyprland/mode",
     ],
     "modules-center": [
-        "hyprland/window"
+        "hyprland/window",
+        "network"
         //"clock#date",
         //"clock#time",
     ],
     "modules-right": [
         "tray",
 	//"custom/media",
-        "network",
         "memory",
         "cpu",
         "temperature",
@@ -166,6 +166,7 @@
 		"Telegram (.*)": "<span color='#31A8E0'>\ue217</span>  $1",
 		"微信(.*)": "<span color='#0FC81D'>\uf1d7</span> $1",
 		"QQ(.*)": "<span color='#5298CC'>\uf1d6</span> $1",
+		"(.*) - Navicat Premium": "<span color='#EFDC5D'>\ue704</span> $1",
 		"vim (.*)": "<span color='#C6C6C6'>\ue7c5</span>  $1",
 		"(.*) - fish": "<span color='#019A00'>\ue691</span>  $1",
 	}
