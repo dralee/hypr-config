@@ -23,10 +23,10 @@
 	"clock",
         "hyprland/workspaces",
         "hyprland/mode",
+        "network"
     ],
     "modules-center": [
-        "hyprland/window",
-        "network"
+        "hyprland/window"
         //"clock#date",
         //"clock#time",
     ],
