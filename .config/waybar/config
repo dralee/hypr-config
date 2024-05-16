@@ -162,6 +162,7 @@
 		"(.*) - Personal - Microsoft​ Edge": "<span color='#2DBDD0'>\udb80\udde9</span>   $1",
 		"(.*) - Google Chrome": "<span color='#FFD837'>\uf268</span>   $1",
 		"(.*) - Code - OSS": "<span color='#3C99D4'>\udb82\ude1e</span>  $1",
+		"(.*) - Visual Studio Code": "<span color='#3C99D4'>\udb82\ude1e</span>  $1",
 		"(.*) - Typora": "<span color='#EAEAEA'>\ue73e</span>  $1",
 		"Telegram (.*)": "<span color='#31A8E0'>\ue217</span>  $1",
 		"微信(.*)": "<span color='#0FC81D'>\uf1d7</span> $1",
