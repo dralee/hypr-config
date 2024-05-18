@@ -23,6 +23,8 @@
 	"clock",
         "hyprland/workspaces",
         "hyprland/mode",
+        "memory",
+        "cpu",
         "network"
     ],
     "modules-center": [
@@ -33,8 +35,6 @@
     "modules-right": [
         "tray",
 	//"custom/media",
-        "memory",
-        "cpu",
         "temperature",
 	"pulseaudio",
 	//"bluetooth",
