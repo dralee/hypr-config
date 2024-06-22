@@ -40,6 +40,11 @@ class LunarCalendar:
             h += f + ' '
         for f in lunar.getFestivals():
             h += f + ' '
+        if lunar.getJieQi() != '':
+            h += lunar.getJieQi() + ' '
+        for f in lunar.getOtherFestivals():
+            h += f
+
         #text = "{}（{}）{}月{} {}".format(day, self.__week(day.getWeek()), lunar.getMonthInChinese(), lunar.getDayInChinese(), h)
         if type == 0:
             print(day)
