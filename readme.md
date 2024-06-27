@@ -44,3 +44,23 @@ pip install lunar_python # for lunar date(hyprlock & status bar)
 ```
 yay -S brightnessctl  # brightness
 ```
+#### qt lib
+```bash
+yay -S qt5-wayland qt6-wayland
+yay -S nwg-look qt5ct
+yay -S xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
+```
+
+#### sddm theme
+https://github.com/3ximus/aerial-sddm-theme
+```bash
+git clone git@github.com:3ximus/aerial-sddm-theme.git
+mv aerial-sddm-theme /usr/share/sddm/themes
+sddm-greeter --test-mode --theme aerial-sddm-theme/ # test the theme show
+```
+* config
+```bash
+$ vim /etc/sddm/sddm.d/xxx.conf
+...
+Current=aerial-sddm-theme
+```
