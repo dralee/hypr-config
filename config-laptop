@@ -1,0 +1,283 @@
+// =============================================================================
+//
+// Waybar configuration
+//
+// Configuration reference: https://github.com/Alexays/Waybar/wiki/Configuration
+//
+// =============================================================================
+
+{
+    // -------------------------------------------------------------------------
+    // Global configuration
+    // -------------------------------------------------------------------------
+
+    "layer": "top",
+
+    "position": "top",
+
+    // If height property would be not present, it'd be calculated dynamically
+    "height": 30,
+
+    "modules-left": [
+	"custom/khal",
+	"clock",
+        "hyprland/workspaces",
+        "hyprland/mode",
+        "memory",
+        "cpu",
+        "network"
+    ],
+    "modules-center": [
+        "hyprland/window"
+        //"clock#date",
+        //"clock#time",
+    ],
+    "modules-right": [
+        "tray",
+	//"custom/media",
+        "temperature",
+	"pulseaudio",
+	//"bluetooth",
+        //"custom/keyboard-layout"
+        "battery",
+	"custom/weather",
+	"custom/power"
+    ],
+
+
+    // -------------------------------------------------------------------------
+    // Modules
+    // -------------------------------------------------------------------------
+
+    "battery": {
+        "interval": 10,
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        // Connected to AC
+        "format": "  {icon}  {capacity}%", // Icon: bolt
+        // Not connected to AC
+        "format-discharging": "{icon}  {capacity}%",
+        "format-icons": [
+            "", // Icon: battery-full
+            "", // Icon: battery-three-quarters
+            "", // Icon: battery-half
+            "", // Icon: battery-quarter
+            ""  // Icon: battery-empty
+        ],
+        "tooltip": true
+    },
+
+   /* "clock#time": {
+        "interval": 1,
+        "format": "{:%H:%M:%S}",
+        "tooltip": false
+    },*/
+
+    "clock": {
+        "interval": 1,
+        "format": "{:%H:%M:%S}",
+	//"format-alt": "{:L%A, %B %d, %Y (%R)}  ",
+        //"tooltip": true,
+	"tooltip-format": "<tt><small>{calendar}</small></tt>",
+	"format-alt": "{:L%A, %B %d, %Y (%R)}  ",
+        //"tooltip-format": "\n<span size='9pt' font='WenQuanYi Zen Hei Mono'>{calendar}</span>",
+	"calendar": {
+                    "mode"          : "year",
+                    "mode-mon-col"  : 3,
+                    "weeks-pos"     : "right",
+                    "on-scroll"     : 1,
+                    "format": {
+                              "months":     "<span color='#ffead3'><b>{}</b></span>",
+                              "days":       "<span color='#ecc6d9'><b>{}</b></span>",
+                              "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
+                              "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
+                              "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
+                              }
+                    },
+        "actions":  {
+                    "on-click-right": "mode",
+                    "on-click-forward": "tz_up",
+                    "on-click-backward": "tz_down",
+                    "on-scroll-up": "shift_up",
+                    "on-scroll-down": "shift_down"
+                    }
+    },
+
+    "clock#date": {
+      "interval": 10,
+      "format": "  {:%e %b %Y}", // Icon: calendar-alt
+      "tooltip-format": "{:%e %B %Y}"
+    },
+
+    "cpu": {
+        "interval": 5,
+        "format": "<span color='#1ba784'></span>   {usage}% ({load})", // Icon: microchip
+        "states": {
+          "warning": 70,
+          "critical": 90
+        }
+    },
+
+    "custom/keyboard-layout": {
+      "exec": "hyprlandmsg -t get_inputs | grep -m1 'xkb_active_layout_name' | cut -d '\"' -f4",
+      // Interval set only as a fallback, as the value is updated by signal
+      "interval": 30,
+      "format": "  {}", // Icon: keyboard
+      // Signal sent by Sway key binding (~/.config/hyprland/key-bindings)
+      "signal": 1, // SIGHUP
+      "tooltip": false
+    },
+
+    "memory": {
+        "interval": 5,
+        "format": "<span color='#f28e16'>\uf4bc</span>   {}%", // Icon: memory
+        "states": {
+            "warning": 70,
+            "critical": 90
+        }
+    },
+
+    "network": {
+        "interval": 5,
+        //"format-wifi": "   {essid} ({signalStrength}%)", // Icon: wifi
+	//"format-wifi": "<span color='#589df6'></span>  <span color='#12aa9c'> {essid}</span> {frequency} <span color='#589df6'>{signaldBm} dB</span> <span color='#589df6'>⇵</span> <span color='#e9ccd3'>{bandwidthUpBits}</span> <span color='#fb8b05'>/</span> <span color='#c6dfc8'>{bandwidthDownBits}</span>",
+	"format-wifi": "<span color='#589df6'></span>  <span color='#589d06'> ⇵</span> <span color='#e9ccd3'>{bandwidthDownBits}</span> <span color='#fb8b05'>/</span> <span color='#c6dfc8'>{bandwidthUpBits}</span>",
+        //"format-ethernet": "  {ifname}: {ipaddr}/{cidr}", // Icon: ethernet
+        "format-ethernet": "<span color='#589df6'>\udb80\udd19</span>  <span color='#589d06'> ⇵</span> <span color='#e9ccd3'>{bandwidthDownBits}</span> <span color='#fb8b05'>/</span> <span color='#c6dfc8'>{bandwidthUpBits}</span>", // Icon: ethernet
+        "format-disconnected": "⚠  Disconnected",
+        "tooltip-format": "{ifname}: {ipaddr}\n<span color='#12aa9c'>{essid}</span>({frequency}) <span color='#589df6'>{signaldBm} dB</span> "
+    },
+
+    "hyprland/mode": {
+        "format": "<span style=\"italic\">  {}</span>", // Icon: expand-arrows-alt
+        "tooltip": false
+    },
+
+    "hyprland/window": {
+        "format": "{}",
+        "max-length": 80,
+	"rewrite": {
+		"(.*) - Personal - Microsoft​ Edge": "<span color='#2DBDD0'>\udb80\udde9</span>   $1",
+		"(.*) - Google Chrome": "<span color='#FFD837'>\uf268</span>   $1",
+		"(.*) - Code - OSS": "<span color='#3C99D4'>\udb82\ude1e</span>  $1",
+		"(.*) - Visual Studio Code": "<span color='#3C99D4'>\udb82\ude1e</span>  $1",
+		"(.*) - Typora": "<span color='#EAEAEA'>\ue73e</span>  $1",
+		"Telegram (.*)": "<span color='#31A8E0'>\ue217</span>  $1",
+		"微信(.*)": "<span color='#0FC81D'>\uf1d7</span> $1",
+		"QQ(.*)": "<span color='#5298CC'>\uf1d6</span> $1",
+		"(.*) - Navicat Premium": "<span color='#EFDC5D'>\ue704</span> $1",
+		"vim (.*)": "<span color='#C6C6C6'>\ue7c5</span>  $1",
+		"(.*) - fish": "<span color='#019A00'>\ue691</span>  $1",
+	}
+    },
+
+    "hyprland/workspaces": {
+        "all-outputs": false,
+        "disable-scroll": true,
+        //"format": "{icon} {name}",
+        "format": "{icon}",
+        "format-icons": {
+            //"1:www": "龜", // Icon: firefox-browser
+            //"2:mail": "", // Icon: mail
+            //"3:editor": "", // Icon: code
+            //"4:terminals": "", // Icon: terminal
+            //"5:portal": "", // Icon: terminal
+            //"urgent": "",
+            //"focused": "",
+            //"default": ""
+		//"1": "",
+		//"2": "",
+		//"3": "",
+		//"4": "",
+		//"5": "",
+		"active": "<span color='#FF8911'>\uf370</span>",
+		"default": "\uf320"
+        }
+    },
+
+    "pulseaudio": {
+        //"scroll-step": 1,
+        "format": "{icon}   {volume}%",
+        "format-bluetooth": "{icon}   {volume}%",
+        "format-muted": "",
+        "format-icons": {
+            "headphones": "",
+            "handsfree": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+
+    "temperature": {
+      "critical-threshold": 80,
+      "interval": 5,
+      "format": "<span color='#eea08c'>{icon}</span>  {temperatureC}°C",
+      "format-icons": [
+          "", // Icon: temperature-empty
+          "", // Icon: temperature-quarter
+          "", // Icon: temperature-half
+          "", // Icon: temperature-three-quarters
+          ""  // Icon: temperature-full
+      ],
+      "tooltip": true
+    },
+
+    "tray": {
+        "icon-size": 21,
+        "spacing": 10
+    },
+    
+    "custom/power": {
+	"format": "<span>\u23fb</span>",
+	"tooltip": false,
+	"on-click": "wlogout",
+    },
+
+    "custom/weather": {
+	"exec": "~/.config/waybar/scripts/get_weather.sh Shenzhen",
+    	"return-type": "json",
+	"format": "{}",
+	"tooltip": true,
+	"interval": 3600
+    },
+   
+    "custom/media": {
+        "format": "{icon}{}",
+        "return-type": "json",
+        "format-icons": {
+            "Playing": " ",
+            "Paused": " ",
+        },
+        "max-length":70,
+        "exec": "playerctl -a metadata --format '{\"text\": \"{{playerName}}: {{artist}} - {{markup_escape(title)}}\", \"tooltip\": \"{{playerName}} : {{markup_escape(title)}}\", \"alt\": \"{{status}}\", \"class\": \"{{status}}\"}' -F",
+        "on-click": "playerctl play-pause",
+    },
+
+    "custom/khal": {
+        "format": "{}",
+        "tooltip": true,
+        "interval": 300,
+        "format-icons": {
+            "default": "what"
+        },
+        "exec": "python ~/.config/waybar/scripts/khal.py",
+        "return-type": "json"
+    },
+
+    "bluetooth": {
+	"format": " {status}",
+	"format-connected": " {device_alias}",
+	"format-connected-battery": " {device_alias} {device_battery_percentage}%",
+	// "format-device-preference": [ "device1", "device2" ], // preference list deciding the displayed device
+	"tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+	"tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+	"tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+	"tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%"
+    }
+}
