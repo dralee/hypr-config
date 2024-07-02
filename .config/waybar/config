@@ -200,7 +200,7 @@
 
     "pulseaudio": {
         //"scroll-step": 1,
-        "format": "<span size='13pt'>{icon}</span>   {volume}%",
+        "format": "<span size='13pt'>{icon}</span>    {volume}%",
         "format-bluetooth": "<span size='13pt'>{icon}</span>   {volume}%",
         "format-muted": "",
         "format-icons": {
