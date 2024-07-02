@@ -168,7 +168,7 @@
 		"微信(.*)": "<span size='13pt' color='#0FC81D'>\uf1d7</span> $1",
 		"QQ(.*)": "<span size='13pt' color='#5298CC'>\uf1d6</span> $1",
 		"(.*) - Navicat Premium": "<span size='13pt' color='#EFDC5D'>\ue704</span> $1",
-		"vim (.*)": "<span size='13pt' color='#C6C6C6'>\ue7c5</span>  $1",
+		"vim (.*)": "<span size='13pt' color='#019331'>\ue7c5</span>  $1",
 		"Feishu(.*)": "<span size='13pt' color='#1F6CFE'>\udb85\uddc6</span>  $1",
 		"(.*) - fish": "<span size='13pt' color='#019A00'>\ue691</span>  $1",
 	}
