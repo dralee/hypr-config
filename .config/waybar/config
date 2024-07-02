@@ -56,9 +56,9 @@
             "critical": 15
         },
         // Connected to AC
-        "format": "  {icon}  {capacity}%", // Icon: bolt
+        "format": "<span size='13pt'></span>  {icon}  {capacity}%", // Icon: bolt
         // Not connected to AC
-        "format-discharging": "{icon}  {capacity}%",
+        "format-discharging": "<span size='13pt'>{icon}</span>  {capacity}%",
         "format-icons": [
             "", // Icon: battery-full
             "", // Icon: battery-three-quarters
@@ -113,7 +113,7 @@
 
     "cpu": {
         "interval": 5,
-        "format": "<span color='#1ba784'></span>   {usage}% ({load})", // Icon: microchip
+        "format": "<span size='13pt' color='#1ba784'></span>   {usage}% ({load})", // Icon: microchip
         "states": {
           "warning": 70,
           "critical": 90
@@ -132,7 +132,7 @@
 
     "memory": {
         "interval": 5,
-        "format": "<span color='#f28e16'>\uf4bc</span>   {}%", // Icon: memory
+        "format": "<span size='13pt' color='#f28e16'>\uf4bc</span>   {}%", // Icon: memory
         "states": {
             "warning": 70,
             "critical": 90
@@ -142,11 +142,11 @@
     "network": {
         "interval": 5,
         //"format-wifi": "   {essid} ({signalStrength}%)", // Icon: wifi
-	//"format-wifi": "<span color='#589df6'></span>  <span color='#12aa9c'> {essid}</span> {frequency} <span color='#589df6'>{signaldBm} dB</span> <span color='#589df6'>⇵</span> <span color='#e9ccd3'>{bandwidthUpBits}</span> <span color='#fb8b05'>/</span> <span color='#c6dfc8'>{bandwidthDownBits}</span>",
+	//"format-wifi": "<span size='13pt' color='#589df6'></span>  <span color='#12aa9c'> {essid}</span> {frequency} <span color='#589df6'>{signaldBm} dB</span> <span color='#589df6'>⇵</span> <span color='#e9ccd3'>{bandwidthUpBits}</span> <span color='#fb8b05'>/</span> <span color='#c6dfc8'>{bandwidthDownBits}</span>",
 	"format-wifi": "<span color='#589df6'></span>  <span color='#589d06'> ⇵</span> <span color='#e9ccd3'>{bandwidthDownBits}</span> <span color='#fb8b05'>/</span> <span color='#c6dfc8'>{bandwidthUpBits}</span>",
         //"format-ethernet": "  {ifname}: {ipaddr}/{cidr}", // Icon: ethernet
-        "format-ethernet": "<span color='#589df6'>\udb80\udd19</span>  <span color='#589d06'> ⇵</span> <span color='#e9ccd3'>{bandwidthDownBits}</span> <span color='#fb8b05'>/</span> <span color='#c6dfc8'>{bandwidthUpBits}</span>", // Icon: ethernet
-        "format-disconnected": "⚠  Disconnected",
+        "format-ethernet": "<span size='13pt' color='#589df6'>\udb80\udd19</span>  <span color='#589d06'> ⇵</span> <span color='#e9ccd3'>{bandwidthDownBits}</span> <span color='#fb8b05'>/</span> <span color='#c6dfc8'>{bandwidthUpBits}</span>", // Icon: ethernet
+        "format-disconnected": "<span size='13pt'>⚠</span>  Disconnected",
         "tooltip-format": "{ifname}: {ipaddr}\n<span color='#12aa9c'>{essid}</span>({frequency}) <span color='#589df6'>{signaldBm} dB</span> "
     },
 
@@ -199,8 +199,8 @@
 
     "pulseaudio": {
         //"scroll-step": 1,
-        "format": "{icon}   {volume}%",
-        "format-bluetooth": "{icon}   {volume}%",
+        "format": "<span size='13pt'>{icon}</span>   {volume}%",
+        "format-bluetooth": "<span size='13pt'>{icon}</span>   {volume}%",
         "format-muted": "",
         "format-icons": {
             "headphones": "",
@@ -217,7 +217,7 @@
     "temperature": {
       "critical-threshold": 80,
       "interval": 5,
-      "format": "<span color='#eea08c'>{icon}</span>  {temperatureC}°C",
+      "format": "<span size='13pt' color='#eea08c'>{icon}</span>  {temperatureC}°C",
       "format-icons": [
           "", // Icon: temperature-empty
           "", // Icon: temperature-quarter
@@ -234,7 +234,7 @@
     },
     
     "custom/power": {
-	"format": "<span>\u23fb</span>",
+	"format": "<span size='13pt'>\u23fb</span>",
 	"tooltip": false,
 	"on-click": "wlogout",
     },
@@ -260,7 +260,7 @@
     },
 
     "custom/khal": {
-        "format": "{}",
+        "format": "<span size='13pt'>{}</span>",
         "tooltip": true,
         "interval": 300,
         "format-icons": {
