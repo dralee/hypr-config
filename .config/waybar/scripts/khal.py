@@ -182,8 +182,12 @@ class Calendar:
             h += f + ' '
         for f in lunar.getFestivals():
             h += f + ' '
-        if f != '':
-            holiday = "\n<span>{}</span>".format(f)
+        if lunar.getJieQi() != '':
+            h += lunar.getJieQi() + ' '
+        for f in lunar.getOtherFestivals():
+            h += f
+        if h != '':
+            holiday = "\n<span>{}</span>".format(h)
 
         e = self.event()
         e_str = ''
