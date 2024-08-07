@@ -178,6 +178,7 @@ class Calendar:
 
         holiday = ''
         f = ''
+        h = ''
         for f in day.getFestivals():
             h += f + ' '
         for f in lunar.getFestivals():
@@ -185,9 +186,9 @@ class Calendar:
         if lunar.getJieQi() != '':
             h += lunar.getJieQi() + ' '
         for f in lunar.getOtherFestivals():
-            h += f
+            h += f + ' '
         if h != '':
-            holiday = "\n<span>{}</span>".format(h)
+            holiday = "\n<span font_weight='bold' color='#FFAF45'> {}</span>".format(h)
 
         e = self.event()
         e_str = ''
