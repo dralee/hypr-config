@@ -23,4 +23,9 @@ Or with pango markups in your config file.
       "1": "<span font='25'>1</span>"
       ...
 }
+
+# custom/weather2 need install the python lib
+```bash
+pip install pyquery
+```
 ```

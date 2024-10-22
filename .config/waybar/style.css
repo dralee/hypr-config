@@ -288,3 +288,33 @@ button:hover {
     border-color: #c9545d;
     color: #c9545d;
 }*/
+
+/* custom/weather2 */
+#custom-weather2.severe {
+    color: #eb937d;
+}
+
+#custom-weather2.sunnyDay {
+    color: #c2ca76;
+}
+
+#custom-weather2.clearNight {
+    color: #2b2b2a;
+}
+
+#custom-weather2.cloudyFoggyDay, #custom-weather2.cloudyFoggyNight {
+    color: #c2ddda;
+}
+
+#custom-weather2.rainyDay, #custom-weather2.rainyNight {
+    color: #5aaca5;
+}
+
+#custom-weather2.showyIcyDay, #custom-weather2.snowyIcyNight {
+    color: #d6e7e5;
+}
+
+#custom-weather2.default {
+    color: #dbd9d8;
+}
+/* end custom/weather2 */
