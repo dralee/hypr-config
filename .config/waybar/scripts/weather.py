@@ -8,8 +8,8 @@ import json
 
 # weather icons
 weather_icons = {
-    "sunnyDay": "\udb81\udda8",
-    "clearNight": "\ue32b",
+    "sunnyDay": "󰖨",
+    "clearNight": "",
     "cloudyFoggyDay": "",
     "cloudyFoggyNight": "",
     "rainyDay": "",
@@ -55,7 +55,7 @@ icon = (
     if status_code in weather_icons
     else weather_icons["default"]
 )
-# print(icon)
+print(icon)
 
 # temperature feels like
 temp_feel = html_data(
@@ -120,7 +120,7 @@ tooltip_text = str.format(
 
 # print waybar module data
 out_data = {
-    "text": f"{icon}   {temp}",
+    "text": f"{icon}  {temp}",
     "alt": status,
     "tooltip": tooltip_text,
     "class": status_code,

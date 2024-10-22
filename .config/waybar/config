@@ -256,7 +256,7 @@
 	"exec": "python ~/.config/waybar/scripts/weather.py",
 	"restart-interval": 300,
 	"return-type": "json",
-	"on-click": "xdg-open https://weather.com/en-IN/weather/today/l/$(location_id)"
+	"on-click": "xdg-open https://weather.com/en-IN/weather/today/l/4945e1616a82b28a995f412bf561340d96d0d1941d2980e107c9fd4bf73be75e"
     	// "format-alt": "{alt}",
     },
    
