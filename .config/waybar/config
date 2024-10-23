@@ -40,8 +40,8 @@
 	//"bluetooth",
         //"custom/keyboard-layout"
         //"battery",
-	//"custom/weather",
-	"custom/weather2",
+	"custom/weather",
+	//"custom/weather2",
 	"custom/power"
     ],
 
