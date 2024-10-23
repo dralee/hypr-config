@@ -3,7 +3,7 @@
 # 由于wttr.in经常存在失败情况，因此使用缓存解决 2024.10.23 by dralee
 storefile=$HOME/.config/waybar/scripts/weather.data
 
-for i in {1..360}
+for i in {1..10}
 do
     text=$(curl -s "https://wttr.in/$1?format=1")
     if [[ $? == 0 ]]
