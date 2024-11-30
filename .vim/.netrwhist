@@ -1,0 +1,8 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =6
+let g:netrw_dirhist_6='/home/dralee/.config'
+let g:netrw_dirhist_5='/home/dralee/.vim'
+let g:netrw_dirhist_4='/home/dralee/.config/fcitx'
+let g:netrw_dirhist_3='/home/dralee/.local/share/applications'
+let g:netrw_dirhist_2='/home/dralee/f/projects/kde/src/kdesrc-build/modules'
+let g:netrw_dirhist_1='/home/dralee/f/projects/kde/src/kdesrc-build'
