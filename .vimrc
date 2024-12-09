@@ -168,6 +168,12 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+" docker compose
+au FileType yaml if bufname("%") =~# "docker-compose.yml" | set ft=yaml.docker-compose | endif
+au FileType yaml if bufname("%") =~# "compose.yml" | set ft=yaml.docker-compose | endif
+let g:coc_filetype_map = {
+  \ 'yaml.docker-compose': 'dockercompose',
+  \ }
 
 " colc Use <Ctrl-F> to format documents with prettier
 command! -nargs=0 Prettier :CocCommand prettier.formatFile

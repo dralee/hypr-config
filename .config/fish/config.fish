@@ -21,6 +21,10 @@ set -x DINGTALKOPENAPI_HOST_ENVIRONMENT Development
 set -x USERCENTER_HOST_ENVIRONMENT Dev
 set -x CA_HOST_ENVIRONMENT Development
 set -x PATH $PATH $HOME/.local/bin
+set -x KOTLIN_NATIVE_HOME $HOME/Application/java/kotlin-native
+set -x KOTLIN_HOME $HOME/Application/java/kotlinc
+set -x PATH $PATH $KOTLIN_NATIVE_HOME/bin $KOTLIN_HOME/bin 
+#set -x PATH $PATH $KOTLIN_HOME/bin
 
 # bun
 set --export BUN_INSTALL "$HOME/.bun"

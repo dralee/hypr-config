@@ -41,7 +41,7 @@
       ]
     },
     "lua": {
-      "command": "~/.local/share/lua-language-server/bin/lua-language-server",
+      "command": "~/.local/share/lsp/lua-language-server/bin/lua-language-server",
       "args": [],
       "rootPatterns": [
         ".git"
@@ -67,6 +67,12 @@
       "command": "systemd-language-server",
       "filetypes": [
         "systemd"
+      ]
+    },
+    "kotlin": {
+      "command": "~/.local/share/lsp/kotlin-server/bin/kotlin-language-server",
+      "filetypes": [
+        "kotlin"
       ]
     }
   }
