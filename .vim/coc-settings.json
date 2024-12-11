@@ -5,7 +5,7 @@
   "prettier.bracketSpacing": false,
   "languageserver": {
     "sql": {
-      "module": "/usr/local/lib/node_modules/sql-language-server/dist/bin/cli.js",
+      "module": "/usr/lib/node_modules/sql-language-server/dist/bin/cli.js",
       "args": [
         "up",
         "--method",
