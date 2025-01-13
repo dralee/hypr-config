@@ -67,26 +67,33 @@ temp_feel_text = f"Feels like {temp_feel}c"
 # min-max temperature
 temp_min = (
     html_data("div[data-testid='wxData'] > span[data-testid='TemperatureValue']")
-    .eq(0)
+    .eq(1)
     .text()
 )
 temp_max = (
     html_data("div[data-testid='wxData'] > span[data-testid='TemperatureValue']")
-    .eq(1)
+    .eq(0)
     .text()
 )
+if temp_max == '--':
+    temp_max = temp
 temp_min_max = f"  {temp_min}\t\t  {temp_max}"
 # print(temp_min_max)
 
 # wind speed
 wind_speed = html_data("span[data-testid='Wind']").text().split("\n")[1]
-wind_text = f"煮  {wind_speed}"
+wind_text = f"\ue27e  {wind_speed}"
 # print(wind_text)
 
 # humidity
 humidity = html_data("span[data-testid='PercentageValue']").text()
 humidity_text = f"  {humidity}"
 # print(humidity_text)
+
+# pressure
+pressure_speed = html_data("span[data-testid='PressureValue']").text().split("\n")[1]
+pressure_text = f"\udb86\udd0a  {pressure_speed}"
+# print(pressure_text)
 
 # visibility
 visbility = html_data("span[data-testid='VisibilityValue']").text()
@@ -107,7 +114,7 @@ prediction = f"\n\n    (hourly) {prediction}" if len(prediction) > 0 else 
 
 # tooltip text
 tooltip_text = str.format(
-    "\t\t{}\t\t\n{}\n{}\n{}\n\n{}\n{}\n{}{}",
+    "\t\t{}\t\t\n{}\n{}\n{}\n\n{}\n{}\n{}\n{}{}",
     f'<span size="xx-large">{temp}</span>',
     f"<big>{icon}</big>",
     f"<big>{status}</big>",
@@ -115,6 +122,7 @@ tooltip_text = str.format(
     f"<big>{temp_min_max}</big>",
     f"{wind_text}\t{humidity_text}",
     f"{visbility_text}\tAQI {air_quality_index}",
+    f"{pressure_text}",
     f"<i>{prediction}</i>",
 )
 
