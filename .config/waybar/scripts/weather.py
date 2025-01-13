@@ -91,7 +91,8 @@ humidity_text = f"  {humidity}"
 # print(humidity_text)
 
 # pressure
-pressure_speed = html_data("span[data-testid='PressureValue']").text().split("\n")[1]
+pressure_speed = html_data("span[data-testid='PressureValue']").text().split("\n")
+pressure_speed = pressure_speed[1] if len(pressure_speed) > 1 else pressure_speed[0]
 pressure_text = f"\udb86\udd0a  {pressure_speed}"
 # print(pressure_text)
 
