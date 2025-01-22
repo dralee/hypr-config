@@ -34,29 +34,41 @@ class PoemShow:
 
     def draw(self, poem:PoemModel):
         """绘制诗词"""
+        width = 500
         # 空白图像
-        image = Image.new('RGBA', (500, 500), (255, 0, 0, 0)) # 透明
+        image = Image.new('RGBA', (width, 500), (255, 0, 0, 0)) # 透明
         #image = Image.new('RGB', (500, 600), (20, 27, 41))
         #image = Image.new('RGB', (500, 400), (255, 27, 41))
         draw = ImageDraw.Draw(image)
         # 画笔
-        font_title = ImageFont.truetype('STXINGKA.TTF', 25)
+        font_title = ImageFont.truetype('STXINGKA.TTF', 25)        
         font = ImageFont.truetype('STXINGKA.TTF', 23)
         font_author = ImageFont.truetype('STXINGKA.TTF', 15)
         
-        left = 20
         # 画笔颜色
-        draw.text((left+10, 50), poem.title, font=font_title, fill=(252, 195, 7))
-        draw.text((left+80, 85), poem.author, font=font_author, fill=(97, 154, 195))
-        draw.text((left+100, 105), poem.dynasty, font=font_author, fill=(242, 107, 31))
+        draw.text((self.__text_center(poem.title, font_title, width), 50), poem.title, font=font_title, fill=(252, 195, 7))
+        draw.text((self.__text_center(poem.author, font_author, width), 85), poem.author, font=font_author, fill=(97, 154, 195))
+        draw.text((self.__text_center(poem.dynasty, font_author, width), 105), poem.dynasty, font=font_author, fill=(242, 107, 31))
         top = 130
-        for p in poem.paragraphs:
-            draw.text((left, top), p.content, font=font, fill=(224, 200, 209))
+        line = ''
+        for pg in poem.paragraphs:
+            if len(line) < len(pg.content):
+                line = pg.content
+        
+        for pg in poem.paragraphs:
+            draw.text((self.__text_center(line, font, width), top), pg.content, font=font, fill=(224, 200, 209))
             top += 28
         
-
         image.show()
         image.save(self.image_path, 'PNG')
+
+    def __text_center(self, text, font:ImageFont, width):
+        l,t,r,b = font.getbbox(text)
+        w = r - l
+        h = b - t
+        #w,h = font.getsize(text)
+        left = (width-w)/2
+        return left
 
 def main():
     ps = PoemShow()
