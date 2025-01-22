@@ -3,6 +3,7 @@
 """
 khal luanar calendar
 2024.05.13 by dralee
+2025.1.22 by dralee support the poem show
 question:
     the waybay tooltip use gtk label which only support span and the font show label, 
     not any others UI html tag, the calendar couldn't show the grid, so short for it
@@ -14,6 +15,7 @@ import json
 from html import escape
 from lunar_python import Lunar, Solar, SolarMonth, LunarMonth, SolarWeek
 from lunar_python.util import HolidayUtil
+from poem.poem_show import PoemShow
 
 #print(datetime.date.today(), datetime.datetime.now())
 
@@ -36,6 +38,7 @@ class Calendar:
         self.week = {
             0: '周 日', 1: '周 一', 2: '周 二', 3: '周 三', 4: '周 四', 5: '周 五', 6: '周 六'
         }
+        self.poem = PoemShow()
 
     def build_day(self, now, d):
         month = now.getMonth()
@@ -194,8 +197,10 @@ class Calendar:
         e_str = ''
         if e != '':
             e_str = "\n<span>{}</span>".format(e)
-        content = '<span font="Microsoft YaHei"><span>{} <span font_weight="bold" color="#B4D4FF">{}</span></span>\n<span><span color="#40E2B3" size="larger">\ue369</span> {}月{}</span>{}{}</span>'\
-            .format(day, self.week[day.getWeek()], lunar.getMonthInChinese(), lunar.getDayInChinese(), holiday, e_str)
+
+        poem = self.poem.run()
+        content = '<span font="Microsoft YaHei"><span>{} <span font_weight="bold" color="#B4D4FF">{}</span></span>\n<span><span color="#40E2B3" size="larger">\ue369</span> {}月{}</span>{}{}\n{}</span>'\
+            .format(day, self.week[day.getWeek()], lunar.getMonthInChinese(), lunar.getDayInChinese(), holiday, e_str, poem)
         
         data = {}
         data['text'] = '<span color="#7469B6">\udb80\udcf6</span>'

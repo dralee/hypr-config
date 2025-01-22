@@ -55,7 +55,7 @@ icon = (
     if status_code in weather_icons
     else weather_icons["default"]
 )
-print(icon)
+#print(icon)
 
 # temperature feels like
 temp_feel = html_data(
