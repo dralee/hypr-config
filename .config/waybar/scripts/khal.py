@@ -12,6 +12,7 @@ question:
 import subprocess
 import datetime
 import json
+import argparse
 from html import escape
 from lunar_python import Lunar, Solar, SolarMonth, LunarMonth, SolarWeek
 from lunar_python.util import HolidayUtil
@@ -39,6 +40,17 @@ class Calendar:
             0: '周 日', 1: '周 一', 2: '周 二', 3: '周 三', 4: '周 四', 5: '周 五', 6: '周 六'
         }
         self.poem = PoemShow()
+        self.change = False
+
+        self.parse()
+
+    def parse(self):
+        ap = argparse.ArgumentParser()
+        ap.add_argument('-c', '--change',help='change the poem immediately', action='store_true', default=False)
+
+        arg = ap.parse_args()
+        if arg.change:
+            self.change = True
 
     def build_day(self, now, d):
         month = now.getMonth()
@@ -122,30 +134,7 @@ class Calendar:
                 content += '\n'
             index += 1
         data['tooltip'] = content
-        
-# """<div class="calendar">
-#     <div class="title">
-#       <a href="javascript:void(0);" @click="onPrevMonth">&lt;</a>
-#       %s年 %s月
-#       <a href="javascript:void(0);" @click="onNextMonth">&gt;</a>
-#     </div>
-#     <div class="body">
-#       <ul class="week">
-#         <li v-for="(head, index) in state.heads" :class="{first: index === 0}">星期%s</li>
-#       </ul>
-#       <ul class="day" v-for="week in state.weeks">
-#         <li class="row">week.index<br>周</li>
-#         <li v-for="day in week.days"
-#             :class="{festival: day.isFestival, today: day.isToday, other: day.isOther, rest: day.isRest}">
-#           day.day
-#           <i>day.text</i>
-#           <u v-if="day.isHoliday"> {{ day.isRest ? '休' : '班' }}</u>
-#         </li>
-#       </ul>
-#     </div>
-#   </div>
-#         """ % (now.getYear(), now.getMonth(), now.getWeek())
-        
+                
         print(json.dumps(data))
 
         return data
@@ -198,7 +187,7 @@ class Calendar:
         if e != '':
             e_str = "\n<span>{}</span>".format(e)
 
-        poem = self.poem.run()
+        poem = self.poem.run(self.change)
         content = '<span font="Microsoft YaHei"><span>{} <span font_weight="bold" color="#B4D4FF">{}</span></span>\n<span><span color="#40E2B3" size="larger">\ue369</span> {}月{}</span>{}{}\n{}</span>'\
             .format(day, self.week[day.getWeek()], lunar.getMonthInChinese(), lunar.getDayInChinese(), holiday, e_str, poem)
         

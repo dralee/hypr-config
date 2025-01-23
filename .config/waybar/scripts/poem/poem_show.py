@@ -16,11 +16,14 @@ class PoemShow:
         self.image_path = '{}/poem.tk'.format(self.root)
         self.image_expires_s = 3600 # 1h
 
-    def run(self):
-        """随机产生指定分类的诗词，不重复"""
+    def run(self, change_immediately=False):
+        """随机产生指定分类的诗词，不重复
+        change_immediately: 是否立即刷新
+        """
+        #print('change_immediately:',change_immediately)
         #print('exists:',exists(self.root))
         #p = self.db_accessor.get_poem(1)
-        if exists(self.image_path):
+        if not change_immediately and exists(self.image_path):
             atime = int(getatime(self.image_path))
             now = int(time.time())
             if now - atime < self.image_expires_s:                

@@ -40,8 +40,8 @@
 	//"bluetooth",
         //"custom/keyboard-layout"
         //"battery",
-	"custom/weather",
-	//"custom/weather2",
+	//"custom/weather",
+	"custom/weather2",
 	"custom/power"
     ],
 
@@ -81,9 +81,12 @@
         "format": "{:%H:%M:%S}",
 	//"format-alt": "{:L%A, %B %d, %Y (%R)}  ",
         //"tooltip": true,
-	"tooltip-format": "<tt><small>{calendar}</small></tt>",
+	//"tooltip-format": "<tt><small>{calendar}</small></tt>",
+	"tooltip-format": "<tt><small><span font='WenQuanYi Zen Hei Mono'>{calendar}</span></small></tt>",
 	"format-alt": "{:L%A, %B %d, %Y (%R)}  ",
-        //"tooltip-format": "\n<span size='9pt' font='WenQuanYi Zen Hei Mono'>{calendar}</span>",
+    //"tooltip-format": "\n<span size='9pt' font='WenQuanYi Zen Hei Mono'>{calendar}</span>",
+	//"timezone": "Asia/Shanghai",
+	//"locale": "zh_CN.UTF-8",
 	"calendar": {
                     "mode"          : "year",
                     "mode-mon-col"  : 3,
@@ -279,7 +282,9 @@
         "format-icons": {
             "default": "what"
         },
+        "signal": 12,
         "exec": "python ~/.config/waybar/scripts/khal.py",
+        "on-click": "python ~/.config/waybar/scripts/khal.py -c && pkill -SIGRTMIN+12 waybar",
         "return-type": "json"
     },
 
