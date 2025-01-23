@@ -1,9 +1,9 @@
 """
 诗词显示
 2025.1.22 by dralee
+2025.1.23 optimization by dralee
 """
 from os.path import getatime,exists,expanduser
-from os import getcwd
 import time
 from PIL import Image, ImageDraw, ImageFont
 from poem_access import PoemDBAccessor
@@ -11,6 +11,7 @@ from model import PoemModel
 
 class PoemShow:
     def __init__(self):
+        self.font_family = 'STXINGKA.TTF'
         self.root = '{}/.config/hypr/scripts/poem'.format(expanduser('~'))
         self.db_name ='{}/poem.db'.format(self.root)
         self.db_accessor = PoemDBAccessor(self.db_name)
@@ -20,7 +21,7 @@ class PoemShow:
     def run(self):
         """随机产生指定分类的诗词，不重复"""
         #print('exists:',exists(self.root))
-        #p = self.db_accessor.get_poem(1)
+        #p = self.db_accessor.get_poem(11)
         if exists(self.image_path):
             atime = int(getatime(self.image_path))
             now = int(time.time())
@@ -41,23 +42,65 @@ class PoemShow:
         #image = Image.new('RGB', (500, 400), (255, 27, 41))
         draw = ImageDraw.Draw(image)
         # 画笔
-        font_title = ImageFont.truetype('STXINGKA.TTF', 25)        
-        font = ImageFont.truetype('STXINGKA.TTF', 23)
-        font_author = ImageFont.truetype('STXINGKA.TTF', 15)
+        font_title = ImageFont.truetype(self.font_family, 25)        
+        font = ImageFont.truetype(self.font_family, 23)
+        font_author = ImageFont.truetype(self.font_family, 15)
         
         # 画笔颜色
-        draw.text((self.__text_center(poem.title, font_title, width), 50), poem.title, font=font_title, fill=(252, 195, 7))
-        draw.text((self.__text_center(poem.author, font_author, width), 85), poem.author, font=font_author, fill=(97, 154, 195))
-        draw.text((self.__text_center(poem.dynasty, font_author, width), 105), poem.dynasty, font=font_author, fill=(242, 107, 31))
-        top = 130
+        titles = []
+        l_title = len(poem.title)
+        if l_title >= 18:
+            p = l_title // 18 + l_title % 18
+            if p == 2:
+                titles.append(poem.title[0: l_title//2])
+                titles.append(poem.title[l_title//2:])
+            else:
+                for i in range(p):
+                    title = poem.title[i*18:(i+1)*18]
+                    if title.strip() == '':
+                        continue
+                    titles.append(title)
+        else:
+            titles.append(poem.title)
+
+        print(titles)
+        top = 50
+        for title in titles:
+            draw.text((self.__text_center(title, font_title, width), top), title, font=font_title, fill=(252, 195, 7))
+            top+=28
+        top+=10
+        draw.text((self.__text_center(poem.author, font_author, width), top), poem.author, font=font_author, fill=(97, 154, 195))
+        top+=20
+        draw.text((self.__text_center(poem.dynasty, font_author, width), top), poem.dynasty, font=font_author, fill=(242, 107, 31))
+        #top = 130
+        top+=25
         line = ''
+        lines = []
         for pg in poem.paragraphs:
-            if len(line) < len(pg.content):
-                line = pg.content
-        
-        for pg in poem.paragraphs:
-            draw.text((self.__text_center(line, font, width), top), pg.content, font=font, fill=(224, 200, 209))
-            top += 28
+            content = pg.content.strip()
+            l = len(content)
+            if l >= 20:
+                p = l // 20 + l % 20
+                for i in range(p):
+                    content = pg.content[i*20:(i+1)*20].strip()
+                    l = len(content)
+                    if l == 0:
+                        continue
+                    if len(line) < l:
+                        line = content
+                    lines.append(content)
+                continue
+            
+            l = len(content)
+            if len(line) < l:
+                line = content
+            if content.strip() == '':
+                continue
+            lines.append(content)
+        print("lines:", lines,"==>",line)
+        for content in lines:
+                draw.text((self.__text_center(line, font, width), top), content, font=font, fill=(224, 200, 209))
+                top += 28
         
         image.show()
         image.save(self.image_path, 'PNG')
