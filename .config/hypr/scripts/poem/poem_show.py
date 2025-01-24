@@ -26,7 +26,7 @@ class PoemShow:
             atime = int(getatime(self.image_path))
             now = int(time.time())
             if now - atime < self.image_expires_s:
-                print("resuse the old image")                
+                print("resuse the old image")
                 return
         self.db_accessor.reset_poem_record()
         p = self.db_accessor.get_poem_not_show_by_category(11)
@@ -42,10 +42,10 @@ class PoemShow:
         #image = Image.new('RGB', (500, 400), (255, 27, 41))
         draw = ImageDraw.Draw(image)
         # 画笔
-        font_title = ImageFont.truetype(self.font_family, 25)        
+        font_title = ImageFont.truetype(self.font_family, 25)
         font = ImageFont.truetype(self.font_family, 23)
         font_author = ImageFont.truetype(self.font_family, 15)
-        
+
         # 画笔颜色
         titles = []
         l_title = len(poem.title)
@@ -90,7 +90,7 @@ class PoemShow:
                         line = content
                     lines.append(content)
                 continue
-            
+
             l = len(content)
             if len(line) < l:
                 line = content
@@ -101,8 +101,8 @@ class PoemShow:
         for content in lines:
                 draw.text((self.__text_center(line, font, width), top), content, font=font, fill=(224, 200, 209))
                 top += 28
-        
-        image.show()
+
+        #image.show()
         image.save(self.image_path, 'PNG')
 
     def __text_center(self, text, font:ImageFont, width):
