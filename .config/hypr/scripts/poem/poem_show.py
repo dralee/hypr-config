@@ -11,7 +11,8 @@ from model import PoemModel
 
 class PoemShow:
     def __init__(self):
-        self.font_family = 'STXINGKA.TTF'
+        self.font_family_back = 'msyh.ttc' # 备用字体使用微软雅黑
+        self.font_family = 'STXINGKA.TTF'  # 主要字体使用华文行楷
         self.root = '{}/.config/hypr/scripts/poem'.format(expanduser('~'))
         self.db_name ='{}/poem.db'.format(self.root)
         self.db_accessor = PoemDBAccessor(self.db_name)
@@ -45,7 +46,10 @@ class PoemShow:
         font_title = ImageFont.truetype(self.font_family, 25)
         font = ImageFont.truetype(self.font_family, 23)
         font_author = ImageFont.truetype(self.font_family, 15)
-
+        font_title_bak = ImageFont.truetype(self.font_family_back, 21)
+        font_bak = ImageFont.truetype(self.font_family_back, 19)
+        font_author_bak = ImageFont.truetype(self.font_family_back, 11)
+        
         # 画笔颜色
         titles = []
         l_title = len(poem.title)
@@ -66,7 +70,8 @@ class PoemShow:
         print(titles)
         top = 50
         for title in titles:
-            draw.text((self.__text_center(title, font_title, width), top), title, font=font_title, fill=(252, 195, 7))
+            #draw.text((self.__text_center(title, font_title, width), top), title, font=font_title, fill=(252, 195, 7))
+            self.__draw_text_line(draw, title, (self.__text_center(title, font, width)), top, font_title,font_title_bak,(252, 195, 7))
             top+=28
         top+=10
         draw.text((self.__text_center(poem.author, font_author, width), top), poem.author, font=font_author, fill=(97, 154, 195))
@@ -99,11 +104,30 @@ class PoemShow:
             lines.append(content)
         print("lines:", lines,"==>",line)
         for content in lines:
-                draw.text((self.__text_center(line, font, width), top), content, font=font, fill=(224, 200, 209))
+                #draw.text((self.__text_center(line, font, width), top), content, font=font, fill=(224, 200, 209))
+                self.__draw_text_line(draw, content, (self.__text_center(line, font, width)), top, font,font_bak,(224,200,209))
                 top += 28
 
         #image.show()
         image.save(self.image_path, 'PNG')
+
+    def __draw_text_line(self, draw, text, x, y, font:ImageFont,font_bak:ImageFont,fill):
+        """自适应字体绘制行"""
+        for char in text:
+            f = font
+            if not f.getmask(char).getbbox():
+                f = font_bak
+            draw.text((x, y), char, font=f, fill=fill)
+            x += self.__font_size(f, char)[0]
+
+    def __font_size(self, font, text):
+        """获取字体大小
+        返回字体：(w,h)
+        """
+        l,t,r,b = font.getbbox(text)
+        w = r - l
+        h = b - t
+        return (w,h)
 
     def __text_center(self, text, font:ImageFont, width):
         l,t,r,b = font.getbbox(text)
