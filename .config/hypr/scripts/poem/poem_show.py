@@ -30,7 +30,8 @@ class PoemShow:
                 print("resuse the old image")
                 return
         self.db_accessor.reset_poem_record()
-        p = self.db_accessor.get_poem_not_show_by_category(11)
+        #p = self.db_accessor.get_poem_not_show_by_category(11)
+        p = self.db_accessor.get_poem_not_show_by_rand() # 随机获取
         #print(p)
         self.draw(p)
 
@@ -49,7 +50,7 @@ class PoemShow:
         font_title_bak = ImageFont.truetype(self.font_family_back, 21)
         font_bak = ImageFont.truetype(self.font_family_back, 19)
         font_author_bak = ImageFont.truetype(self.font_family_back, 11)
-        
+
         # 画笔颜色
         titles = []
         l_title = len(poem.title)

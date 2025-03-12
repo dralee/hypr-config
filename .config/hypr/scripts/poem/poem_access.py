@@ -2,7 +2,7 @@
 诗词访问
 2025.1.22 by dralee
 """
-from sqlite3_db import SqliteAccessor
+from utils.sqlite3_db import SqliteAccessor
 from model import AuthorModel,PoemModel,ParagraphModel,NoteModel,PoemRecordModel
 
 class PoemDBAccessor(SqliteAccessor):
@@ -42,6 +42,25 @@ class PoemDBAccessor(SqliteAccessor):
         self.create_poem_record(PoemRecordModel(p.id,category_id,p.author_id))
         return p
     
+    def get_poem_not_show_by_rand(self):
+        """查询未显示的诗词根据随机查询"""
+        sql = "SELECT poem_id FROM poem_record"
+        ids = self.query(sql)
+        ids_exists = []
+        if ids is not None and len(ids) > 0:
+            ids_exists = [str(id[0]) for id in ids]
+        sql = "SELECT id FROM poem WHERE id NOT IN\
+             ({}) ORDER BY RANDOM() LIMIT 1".format(','.join(ids_exists))
+        #print(sql, ids_exists, ids)
+        item = self.query_one(sql)
+        if item is None:
+            return None
+        p = self.get_poem(item[0])
+        if p is None:
+            return None
+        self.create_poem_record(PoemRecordModel(p.id,p.category_id,p.author_id))
+        return p
+    
     def reset_poem_record(self):
         """重置诗词显示记录"""
         sql = "SELECT COUNT(1) FROM poem p WHERE NOT EXISTS(SELECT poem_id FROM poem_record WHERE poem_id=p.id)"
@@ -49,9 +68,9 @@ class PoemDBAccessor(SqliteAccessor):
         if count is None:            
             return
         if count[0] > 0:
-            #print("存在未显示的诗词记录")
+            print("存在未显示的诗词记录")
             return
-        #print("可显示诗词已为空,重置诗词显示记录")
+        print("可显示诗词已为空,重置诗词显示记录")
         sql = "DELETE FROM poem_record"
         self.execute(sql)
     
