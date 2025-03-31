@@ -20,6 +20,21 @@ weather_icons = {
     "default": "",
 }
 
+def split_value(s_value,splitor='\n',take_index=0):
+    """分隔字符串，并只取其中一项
+    s_value: 源字符串
+    splitor: 分隔符，默认'\n'
+    take_index: 结果取第几项
+    """
+    if s_value is None:
+        return ''
+    s_value = s_value.strip()
+    items = s_value.split(splitor)
+    size = len(items)
+    if take_index >= size - 1:
+        return items[0]
+    return items[take_index]
+
 # get location_id
 # to get your own location_id, go to https://weather.com & search your location.
 # once you choose your location, you can see the location_id in the URL(64 chars long hex string)
@@ -81,7 +96,8 @@ temp_min_max = f"  {temp_min}\t\t  {temp_max}"
 # print(temp_min_max)
 
 # wind speed
-wind_speed = html_data("span[data-testid='Wind']").text().split("\n")[1]
+#wind_speed = html_data("span[data-testid='Wind']").text().split("\n")[1]
+wind_speed = split_value(html_data("span[data-testid='Wind']").text(), "\n",1)
 wind_text = f"\ue27e  {wind_speed}"
 # print(wind_text)
 
@@ -135,3 +151,4 @@ out_data = {
     "class": status_code,
 }
 print(json.dumps(out_data))
+
