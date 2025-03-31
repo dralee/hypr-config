@@ -51,7 +51,7 @@ class Weather:
         self.temp_min_max = temp_min_max
         self.wind_text = wind_text
         self.pressure_text = pressure_text
-        self.humidity_text = humidity_text        
+        self.humidity_text = humidity_text
         self.air_quality_index = air_quality_index
         self.visbility_text = visbility_text
         self.prediction = prediction
@@ -163,7 +163,8 @@ class Weather:
         # print(temp_min_max)
 
         # wind speed
-        wind_speed = html_data("span[data-testid='Wind']").text().split("\n")[1]
+        #wind_speed = html_data("span[data-testid='Wind']").text().split("\n")[1]
+        wind_speed = split_value(html_data("span[data-testid='Wind']").text(),"\n",1)
         self.wind_text = f"\ue27e {wind_speed}"
         # print(wind_text)
 
@@ -222,7 +223,7 @@ class Weather:
         return self.value_type & value_type.value == value_type.value
 
     def result(self):
-        res = ''            
+        res = ''
         if self.has_value(WeatherValue.current):
             res = append(res, f"{self.icon} {self.temp}")
         if self.has_value(WeatherValue.range):
@@ -237,7 +238,7 @@ class Weather:
             res = append(res, self.visbility_text)
 
         return res
-    
+
     def process(self):
         """请求天气数据，返回Weather对象"""
         #print("process...")
@@ -250,16 +251,31 @@ class Weather:
         """读取缓存或从请求中读取"""
         if(not exists(self.cache_file)):
             return self.process()
-        
+
         with open(self.cache_file, "r", encoding='utf8') as f:
             weather = json.loads(f.read())
             last_timestamp = int(weather['timestamp'])
             timestamp = int(time.time())
             if (timestamp - last_timestamp) > self.cache_expire_seconds:
                 return self.process()
-            
+
             return Weather(**weather)
-        
+
+def split_value(s_value,splitor='\n',take_index=0):
+    """分隔字符串，并只取其中一项
+    s_value: 源字符串
+    splitor: 分隔符，默认'\n'
+    take_index: 结果取第几项
+    """
+    if s_value is None:
+        return ''
+    s_value = s_value.strip()
+    items = s_value.split(splitor)
+    size = len(items)
+    if take_index >= size - 1:
+        return items[0]
+    return items[take_index]
+
 def append(res, s):
     if res != '':
         res += '\t'
