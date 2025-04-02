@@ -45,8 +45,8 @@ else
 	echo env is ok for luarocks.
 fi
 
-#init_deps
+init_deps
 
-#show_deps
+show_deps
 
 mpv_init
