@@ -30,5 +30,9 @@ md5.sumhexa("xxxx")
 https://github.com/kikito/md5.lua/blob/master/md5.lua
 
 
+### 自动化安装
+```bash
+./install.sh
+```
 
 

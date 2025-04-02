@@ -1,14 +1,15 @@
 -- 支持播放列表在关闭后，下一次启动时，自动继续播放上次的文件
 -- 2025.4.1 by dralee
 
+local home = os.getenv("HOME")
 local playlist_pos_file = "/tmp/mpv_playlist_pos"  -- 记录播放进度的文件
 
 -- 加载luajit版本(即lua5.1)版本的库
-package.cpath = package.cpath .. ";/home/dralee/.luarocks/lib/lua/5.1/?.so"
+package.cpath = package.cpath .. string.format(";%s/.luarocks/lib/lua/5.1/?.so",home)
 
 local mp = require("mp")
 local cjson = require("cjson")   -- luarocks install lua-cjson
-local md5 = dofile("/home/dralee/.config/mpv/scripts/md5.lua")
+local md5 = dofile(string.format("%s/.config/mpv/scripts/md5.lua",home))
 
 
 -- 退出时记录播放位置
