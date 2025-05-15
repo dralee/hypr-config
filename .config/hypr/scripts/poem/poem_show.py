@@ -17,6 +17,7 @@ class PoemShow:
         self.db_name ='{}/poem.db'.format(self.root)
         self.db_accessor = PoemDBAccessor(self.db_name)
         self.image_path = '{}/poem.png'.format(self.root)
+        self.text_path = '{}/poem.txt'.format(self.root)
         self.image_expires_s = 14400 # 4h
 
     def run(self):
@@ -110,7 +111,17 @@ class PoemShow:
                 top += 28
 
         #image.show()
+        text = titles
+        text.append(poem.author)
+        text.append(poem.dynasty)
+        text += lines
+        self.__log('\n'.join(text))
         image.save(self.image_path, 'PNG')
+
+    def __log(self, text):
+        with open(self.text_path, 'w') as f:
+            f.write(text)
+            f.write('\n')
 
     def __draw_text_line(self, draw, text, x, y, font:ImageFont,font_bak:ImageFont,fill):
         """自适应字体绘制行"""
