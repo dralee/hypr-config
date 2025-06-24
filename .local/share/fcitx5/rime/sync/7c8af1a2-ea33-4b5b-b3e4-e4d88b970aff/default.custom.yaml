@@ -1,8 +1,0 @@
-patch:
-  "translator/dictionary": wubi_pinyin.extended  # 词库名字可自定义,与文件名保持一致即可
-  "menu/page_size": 9
-  schema_list:
-    - schema: wubi_pinyin
-  key_binder:
-    bindings:
-      - { when: always, accept: "Control+Shift+F", toggle: traditionalization }
