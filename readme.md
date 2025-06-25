@@ -65,7 +65,10 @@ $ vim /etc/sddm/sddm.d/xxx.conf
 Current=aerial-sddm-theme
 ```
 
-
+### sync the local config for the repository
+```bash
+./sync.sh
+```
 
 
 

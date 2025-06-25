@@ -29,3 +29,13 @@ set -x PATH $PATH $KOTLIN_NATIVE_HOME/bin $KOTLIN_HOME/bin
 # bun
 set --export BUN_INSTALL "$HOME/.bun"
 set --export PATH $BUN_INSTALL/bin $PATH
+
+# mysql
+set -x PATH $PATH /usr/local/mysql/bin
+
+
+source ~/Application/shells/fish/tod.sh
+source ~/Application/shells/fish/tom.sh
+source ~/.config/environment
+
+
