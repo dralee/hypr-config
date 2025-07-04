@@ -2,6 +2,7 @@
 诗词显示
 2025.1.22 by dralee
 2025.1.23 optimization by dralee
+2025.7.3 by dralee scale_factor for generating image to fix hyprlock (HiDPI)
 """
 from os.path import getatime,exists,expanduser
 import time
@@ -39,18 +40,22 @@ class PoemShow:
     def draw(self, poem:PoemModel):
         """绘制诗词"""
         width = 500
+        height = 500
+        scale_factor = 2.0
+        width = int(width * scale_factor)
+        height = int(height * scale_factor)
         # 空白图像
-        image = Image.new('RGBA', (width, 500), (255, 0, 0, 0)) # 透明
+        image = Image.new('RGBA', (width, height), (0, 0, 0, 0)) # 透明
         #image = Image.new('RGB', (500, 600), (20, 27, 41))
         #image = Image.new('RGB', (500, 400), (255, 27, 41))
         draw = ImageDraw.Draw(image)
         # 画笔
-        font_title = ImageFont.truetype(self.font_family, 25)
-        font = ImageFont.truetype(self.font_family, 23)
-        font_author = ImageFont.truetype(self.font_family, 15)
-        font_title_bak = ImageFont.truetype(self.font_family_back, 21)
-        font_bak = ImageFont.truetype(self.font_family_back, 19)
-        font_author_bak = ImageFont.truetype(self.font_family_back, 11)
+        font_title = ImageFont.truetype(self.font_family, 25*scale_factor)
+        font = ImageFont.truetype(self.font_family, 23*scale_factor)
+        font_author = ImageFont.truetype(self.font_family, 15*scale_factor)
+        font_title_bak = ImageFont.truetype(self.font_family_back, 21*scale_factor)
+        font_bak = ImageFont.truetype(self.font_family_back, 19*scale_factor)
+        font_author_bak = ImageFont.truetype(self.font_family_back, 11*scale_factor)
 
         # 画笔颜色
         titles = []
@@ -73,12 +78,12 @@ class PoemShow:
         top = 50
         for title in titles:
             #draw.text((self.__text_center(title, font_title, width), top), title, font=font_title, fill=(252, 195, 7))
-            self.__draw_text_line(draw, title, (self.__text_center(title, font, width)), top, font_title,font_title_bak,(252, 195, 7))
+            self.__draw_text_line(draw, title, (self.__text_center(title, font, width)), top*scale_factor, font_title,font_title_bak,(252, 195, 7))
             top+=28
         top+=10
-        draw.text((self.__text_center(poem.author, font_author, width), top), poem.author, font=font_author, fill=(97, 154, 195))
+        draw.text((self.__text_center(poem.author, font_author, width), top*scale_factor), poem.author, font=font_author, fill=(97, 154, 195))
         top+=20
-        draw.text((self.__text_center(poem.dynasty, font_author, width), top), poem.dynasty, font=font_author, fill=(242, 107, 31))
+        draw.text((self.__text_center(poem.dynasty, font_author, width), top*scale_factor), poem.dynasty, font=font_author, fill=(242, 107, 31))
         #top = 130
         top+=25
         line = ''
@@ -107,7 +112,7 @@ class PoemShow:
         print("lines:", lines,"==>",line)
         for content in lines:
                 #draw.text((self.__text_center(line, font, width), top), content, font=font, fill=(224, 200, 209))
-                self.__draw_text_line(draw, content, (self.__text_center(line, font, width)), top, font,font_bak,(224,200,209))
+                self.__draw_text_line(draw, content, (self.__text_center(line, font, width)), top*scale_factor, font,font_bak,(224,200,209))
                 top += 28
 
         #image.show()

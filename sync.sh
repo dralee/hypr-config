@@ -1,6 +1,10 @@
 #!/bin/bash
 # auto sync the local for this repository
 # 2025.6.24 by dralee
+# 2025.7.4 by dralee auto commit
+# $1: auto commit comment, if empty not auto commit
+
+comment=$1
 
 # dir
 config_dir=.config
@@ -123,3 +127,13 @@ cp $HOME/$fcitx5_profile $fcitx5_profile
 
 # set executable shell
 find . -type f \( -name "*.sh" -o -name "*.fish" \) -exec git add --chmod=+x {} +
+
+if [ -z $comment ];then
+	echo not set the comment, just syn.
+	git status
+else
+	echo just commit by \"$comment\" after sync.
+	git add .
+	git commit -m "$comment"
+	git push
+fi
