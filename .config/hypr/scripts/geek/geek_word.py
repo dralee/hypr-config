@@ -10,6 +10,7 @@ class GeekWord:
         self.root = '{}/.config/hypr/scripts/geek'.format(expanduser('~'))
         self.source = "geek_quotes_10000.txt"
         self.text_file = "word"
+        self.sync = ".sync"
         self.cache_time = 3600 # 1h
  
     def __read_file(self, file_name):
@@ -29,10 +30,12 @@ class GeekWord:
         每句索引以 1 开始
         """
         word = None
+        tstr = self.__read_file(self.sync)
+        lasttime = int('0' if tstr is None or tstr == '' else tstr)
+        now = int(time.time())
         if exists(self.text_file):
-            atime = int(getatime(self.text_file))
-            now = int(time.time())
-            if now - atime < self.cache_time:
+            #atime = int(getatime(self.text_file))            
+            if now - lasttime < self.cache_time:
                 #print("resuse the old word")
                 return
             word = self.__read_file(self.text_file)
@@ -47,6 +50,7 @@ class GeekWord:
         word = words[index]
         #print("max index:", max_index, "index:", index, "word:", word)
         self.__save_file(self.text_file, word)
+        self.__save_file(self.sync, str(now))
     
     def read(self):
         """获取每日一话"""
