@@ -128,7 +128,7 @@ cp $HOME/$fcitx5_profile $fcitx5_profile
 # set executable shell
 find . -type f \( -name "*.sh" -o -name "*.fish" \) -exec git add --chmod=+x {} +
 
-if [ -z $comment ];then
+if [ -z "$comment" ];then
 	echo not set the comment, just syn.
 	git status
 else
