@@ -85,7 +85,7 @@ cp -r $HOME/$wlogout_dir/. $wlogout_dir
 cp -r $HOME/$wofi_dir/. $wofi_dir
 cp -r $HOME/$vim_dir/. $vim_dir
 #rsync -av --exclude '*/.git/' --exclude='*/.github/' $HOME/$vim_dir/. $vim_dir
-cp -r $HOME/$firefox_default_chrome $firefox_default_chrome
+cp -r $HOME/$firefox_default_chrome/. $firefox_default_chrome
 
 # clear not need
 rm -rf $hyprland_dir_scripts/poem/__pycache__/
