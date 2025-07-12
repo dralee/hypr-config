@@ -9,6 +9,7 @@ comment=$1
 # dir
 config_dir=.config
 local_dir=.local
+mozilla_dir=.mozilla
 local_share_dir=$local_dir/share
 hyprland_dir=$config_dir/hypr
 hyprland_dir_scripts=$hyprland_dir/scripts
@@ -30,6 +31,8 @@ wofi_dir=$config_dir/wofi
 vim_dir=.vim
 etc_dir=/etc
 usr_dir=/usr
+firefox_default_chrome=$mozilla_dir/firefox/71ul370y.default-release/chrome
+
 
 # file
 hyprland_config=$hyprland_dir/hyprland.conf
@@ -59,6 +62,7 @@ mkdir -p $config_dir/kitty
 mkdir -p $config_dir/mako
 mkdir -p $typora_themes_dir
 mkdir -p $vim_dir
+mkdir -p $firefox_default_chrome
 
 # cp dir
 #echo cp $HOME/$hyprland_dir_scripts $hyprland_dir_scripts
@@ -81,6 +85,7 @@ cp -r $HOME/$wlogout_dir/. $wlogout_dir
 cp -r $HOME/$wofi_dir/. $wofi_dir
 cp -r $HOME/$vim_dir/. $vim_dir
 #rsync -av --exclude '*/.git/' --exclude='*/.github/' $HOME/$vim_dir/. $vim_dir
+cp -r $HOME/$firefox_default_chrome $firefox_default_chrome
 
 # clear not need
 rm -rf $hyprland_dir_scripts/poem/__pycache__/
