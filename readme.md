@@ -254,3 +254,8 @@ xcb-util-errors
 xclip
 xdg-desktop-portal-gtk
 xorg-xinput
+
+### general
+the general components for daily using, not for the spacial system path
+fonts, the daily using fonts for such as programing, show and so on.
+
