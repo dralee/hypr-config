@@ -7,3 +7,19 @@
 @import "popup/popup.css";
 @import "urlbar/urlbar.css";
 @import "findbar/findbar.css";
+/* 地址栏建议弹出框背景 */
+#urlbarView {
+  background-color: rgba(40, 40, 40, 0.95) !important;
+  color: #eee !important;
+}
+
+/* 每一项建议（如搜索建议、历史记录）的颜色 */
+.urlbarView-row {
+  background-color: transparent !important;
+  color: #eee !important;
+}
+
+.urlbarView-row[selected] {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
