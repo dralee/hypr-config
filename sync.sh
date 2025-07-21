@@ -139,6 +139,7 @@ if [ -z "$comment" ];then
 else
 	echo just commit by \"$comment\" after sync.
 	git add .
+	git status
 	git commit -m "$comment"
 	git push
 fi
