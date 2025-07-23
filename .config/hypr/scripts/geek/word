@@ -1,1 +1,1 @@
-printf("Hello, lockscreen!\n");  #434
+While(true) { keepLearning(); }  #454
