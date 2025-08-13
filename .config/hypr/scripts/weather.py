@@ -19,6 +19,7 @@ weather_icons = {
     "clearNight": "",
     "cloudyFoggyDay": "",
     "cloudyFoggyNight": "",
+    "mostly-clear-day": "",
     "rainyDay": "",
     "rainyNight": "",
     "snowyIcyDay": "",
@@ -128,8 +129,10 @@ class Weather:
         # print(status)
 
         # status code
-        self.status_code = html_data("#regionHeader").attr("class").split(" ")[2].split("-")[2]
+        #self.status_code = html_data("#regionHeader").attr("class").split(" ")[2].split("-")[2]
         # print(status_code)
+        status_code = html_data("svg[class^='WxIcon']").attr("name")
+        #print("xxxx", status_code)
 
         # status icon
         self.icon = (

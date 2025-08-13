@@ -11,6 +11,7 @@ weather_icons = {
     "sunnyDay": "󰖨",
     "clearNight": "",
     "cloudyFoggyDay": "",
+    "mostly-clear-day": "",
     "cloudyFoggyNight": "",
     "rainyDay": "",
     "rainyNight": "",
@@ -42,6 +43,7 @@ def split_value(s_value,splitor='\n',take_index=0):
 #location_id = "c3e96d6cc4965fc54f88296b54449571c4107c73b9638c16aafc83575b4ddf2e"  # TODO
 # location_id = "8139363e05edb302e2d8be35101e400084eadcecdfce5507e77d832ac0fa57ae"
 location_id = "4945e1616a82b28a995f412bf561340d96d0d1941d2980e107c9fd4bf73be75e" # Shenzhen
+location_name = "Shenzhen"
 
 # priv_env_cmd = 'cat $PRIV_ENV_FILE | grep weather_location | cut -d "=" -f 2'
 # location_id = subprocess.run(
@@ -61,8 +63,10 @@ status = f"{status[:16]}.." if len(status) > 17 else status
 # print(status)
 
 # status code
-status_code = html_data("#regionHeader").attr("class").split(" ")[2].split("-")[2]
+#status_code = "flggy"# html_data("#regionHeader").attr("class").split(" ")[2].split("-")[2]
 # print(status_code)
+status_code = html_data("svg[class^='WxIcon']").attr("name")
+#print("xxxx", status_code)
 
 # status icon
 icon = (
@@ -132,7 +136,7 @@ prediction = f"\n\n    (hourly) {prediction}" if len(prediction) > 0 else 
 # tooltip text
 tooltip_text = str.format(
     "\t\t{}\t\t\n{}\n{}\n{}\n\n{}\n{}\n{}\n{}{}",
-    f'<span size="xx-large">{temp}</span>',
+    f'<span size="xx-large">{temp} {location_name}</span>',
     f"<big>{icon}</big>",
     f"<big>{status}</big>",
     f"<small>{temp_feel_text}</small>",
