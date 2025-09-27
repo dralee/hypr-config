@@ -44,7 +44,7 @@
     min-height: 0;
     margin: 0;
     padding: 0;
-    font-family: Microsoft YaHei;
+    font-family: Microsoft YaHei;/*WenQuanYi Zen Hei Mono; */
     font-size: 10pt;
 }
 
@@ -52,7 +52,7 @@
 #waybar {
     background: #323232;
     color: white;
-    font-family: Cantarell, Noto Sans, sans-serif; /*Mononoki Nerd Font, Noto Sans;*/
+    /*font-family: Cantarell, Noto Sans, sans-serif;*/ /*Mononoki Nerd Font, Noto Sans;*/
     font-size: 10pt;
     /*opacity: 0.5;*/
     background: transparent;
@@ -318,4 +318,5 @@ button:hover {
 #custom-weather2.default {
     color: #dbd9d8;
 }
+
 /* end custom/weather2 */
