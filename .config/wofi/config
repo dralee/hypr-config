@@ -4,6 +4,3 @@ filter_rate=100
 allow_markup=true
 lines=15
 width=30%
-#normal_window=true
-insensitive=true
-#show_all=false

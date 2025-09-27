@@ -2,7 +2,9 @@
 -- 2025.4.1 by dralee
 -- 2025.4.3 by dralee support playlist time pos
 local home = os.getenv("HOME")
-local playlist_pos_file = "/tmp/mpv_playlist_pos" -- 记录播放进度的文件
+local pos_dir = string.format("%s/.config/mpv/store", home)
+os.execute(string.format("mkdir -p %s", pos_dir)) -- 创建缓存目录
+local playlist_pos_file = string.format("%s/mpv_playlist_pos", pos_dir) -- 记录播放进度的文件
 
 -- 加载luajit版本(即lua5.1)版本的库
 package.cpath = package.cpath ..
