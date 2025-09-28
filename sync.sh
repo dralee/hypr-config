@@ -36,7 +36,9 @@ firefox_default_chrome=$mozilla_dir/firefox/71ul370y.default-release/chrome
 
 # file
 hyprland_config=$hyprland_dir/hyprland.conf
+hyprland_custom=$hyprland_dir/custom
 hyprland_config_work=$hyprland_dir/hyprland-work.conf
+hyprland_custom_work=$hyprland_dir/custom-work
 hyprlock_config=$hyprland_dir/hyprlock.conf
 hyprpaper_config=$hyprland_dir/hyprpaper.conf
 #hypridle_config=$hyprland_dir/hypridle.conf
@@ -53,6 +55,7 @@ mkdir -p $config_dir
 mkdir -p $local_path
 mkdir -p $hyprland_dir_scripts
 mkdir -p $hyprland_dir
+mkdir -p $hyprland_custom_work
 mkdir -p $fcitx5_local_rime
 mkdir -p $fcitx5_conf_dir
 mkdir -p $config_dir/fish
@@ -67,6 +70,7 @@ mkdir -p $firefox_default_chrome
 # cp dir
 #echo cp $HOME/$hyprland_dir_scripts $hyprland_dir_scripts
 cp -r $HOME/$hyprland_dir_scripts/. $hyprland_dir_scripts
+cp -r $HOME/$hyprland_custom/. $hyprland_custom_work
 #echo cp $HOME/$waybar_dir $waybar_dir
 cp -r $HOME/$waybar_dir/. $waybar_dir
 #echo cp $HOME/mpv_dir $mpv_dir
