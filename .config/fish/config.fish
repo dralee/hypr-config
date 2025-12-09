@@ -1,5 +1,7 @@
 alias del "mv -t ~/.local/share/Trash/files/ --backup"
 
+set -Ux EDITOR vim
+
 if status is-interactive
     # Commands to run in interactive sessions can go here
 end
@@ -37,5 +39,5 @@ set -x PATH $PATH /usr/local/mysql/bin
 source ~/Application/shells/fish/tod.sh
 source ~/Application/shells/fish/tom.sh
 source ~/.config/environment
-
+source ~/Application/shells/fish/y.sh
 

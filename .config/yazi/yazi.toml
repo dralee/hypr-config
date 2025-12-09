@@ -1,0 +1,78 @@
+# config for yazi
+
+[opener]
+play = [
+	{ run = 'mpv "$@"', orphan = true, for = "unix" },
+	{ run = '"C:\Program Files\mpv.exe" %*', orphan = true, for = "windows" }
+]
+edit = [
+	{ run = '$EDITOR "$@"', block = true, for = "unix" },
+	{ run = "%EDITOR% %*",  block = true, for = "windows" },
+]
+open = [
+	{ run = 'xdg-open "$@"', desc = "Open" },
+]
+view = [
+	{ run = 'feh "$@"', desc = "view image" },
+]
+
+[open]
+prepend_rules = [
+	{ name = "*.json", use = "edit" },
+
+	# Multiple openers for a single rule
+	{ name = "*.html", use = [ "open", "edit" ] },
+	{ name = "*.md", use = [ "edit" ] },
+	# image
+	{ mime = "image/*", use = [ "view" ] },
+]
+append_rules = [
+	{ name = "*", use = "my-fallback" },
+]
+
+
+#[plugin]
+#prepend_previewers = [
+# { name = "*.gz", run = "zless-preview" },
+#]
+[plugin]
+prepend_preloaders = [
+    # Replace magick, image, video with mediainfo
+    { mime = "{audio,video,image}/*", run = "mediainfo" },
+    { mime = "application/subrip", run = "mediainfo" },
+    # Adobe Illustrator, Adobe Photoshop is image/adobe.photoshop, already handled above
+    { mime = "application/postscript", run = "mediainfo" },
+  ]
+prepend_previewers = [
+	#{ mime = "application/{*zip,tar,bzip2,7z*,rar,xz,zstd,java-archive}", 	run  = "ouch" }, # ouch
+	# piper for gz,xz
+	{ name = "*.tar*", run = 'piper --format=name -- tar tf "$1"'}, # tar tf xxx
+    { name = "*.csv", run = "rich-preview"}, # for csv files
+    { name = "*.md", run = "rich-preview" }, # for markdown (.md) files
+    { name = "*.rst", run = "rich-preview"}, # for restructured text (.rst) files
+    { name = "*.ipynb", run = "rich-preview"}, # for jupyter notebooks (.ipynb)
+    { name = "*.json", run = "rich-preview"}, # for json (.json) files
+#    { name = "*.lang_type", run = "rich-preview"} # for particular language files eg. .py, .go., .lua, etc.
+
+# zoom
+#	{ mime = "image/{jpeg,png,webp}", run = "zoom 5"},
+
+# Replace magick, image, video with mediainfo
+    { mime = "{audio,video,image}/*", run = "mediainfo"},
+    { mime = "application/subrip", run = "mediainfo" },
+    # Adobe Illustrator, Adobe Photoshop is image/adobe.photoshop, already handled above
+    { mime = "application/postscript", run = "mediainfo" },
+
+]
+
+[tasks]
+image_alloc = 1073741824        # = 1024*1024*1024 = 1024MB
+
+
+
+[mgr]
+prepend_keymap = [
+	{ on = "+", run = "plugin zoom 1", desc = "Zoom in hovered file"},
+	{ on = "-", run = "plugin zoom -1", desc = "Zoom out hovered file"},
+	
+]

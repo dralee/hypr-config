@@ -1,0 +1,27 @@
+[[plugin.deps]]
+use = "ndtoan96/ouch"
+rev = "cfb9140"
+hash = "b5067143415bd2d46c0dfa57319ddcef"
+
+[[plugin.deps]]
+use = "AnirudhG07/rich-preview"
+rev = "831234e"
+hash = "ed3363e256e210593f0f8e4cec3e36a9"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:piper"
+rev = "19dc890"
+hash = "b26d542e75151835d7bc885f6dda74cb"
+
+[[plugin.deps]]
+use = "boydaihungst/mediainfo"
+rev = "af8bdf4"
+hash = "43fa632820cc91919c4e713652140b48"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:zoom"
+rev = "19dc890"
+hash = "9dee2bf990ea941ccf67df74bca45468"
+
+[flavor]
+deps = []

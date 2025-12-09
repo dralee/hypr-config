@@ -32,7 +32,7 @@ vim_dir=.vim
 etc_dir=/etc
 usr_dir=/usr
 firefox_default_chrome=$mozilla_dir/firefox/71ul370y.default-release/chrome
-
+yazi_dir=$config_dir/yazi
 
 # file
 hyprland_config=$hyprland_dir/hyprland.conf
@@ -66,6 +66,7 @@ mkdir -p $config_dir/mako
 mkdir -p $typora_themes_dir
 mkdir -p $vim_dir
 mkdir -p $firefox_default_chrome
+mkdir -p $yazi_dir
 
 # cp dir
 #echo cp $HOME/$hyprland_dir_scripts $hyprland_dir_scripts
@@ -88,6 +89,7 @@ cp -r $HOME/$typora_themes_dir/. $typora_themes_dir
 cp -r $HOME/$wlogout_dir/. $wlogout_dir
 cp -r $HOME/$wofi_dir/. $wofi_dir
 cp -r $HOME/$vim_dir/. $vim_dir
+cp -r $HOME/$yazi_dir/. $yazi_dir
 #rsync -av --exclude '*/.git/' --exclude='*/.github/' $HOME/$vim_dir/. $vim_dir
 cp -r $HOME/$firefox_default_chrome/. $firefox_default_chrome
 
