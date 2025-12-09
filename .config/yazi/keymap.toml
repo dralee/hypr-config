@@ -1,0 +1,9 @@
+# keymap
+[mgr]
+prepend_keymap = [
+	{ on = "+", run = "plugin zoom 1", desc = "Zoom in hovered file"},
+	{ on = "-", run = "plugin zoom -1", desc = "Zoom out hovered file"},
+	#{ on = "e", run = 'open --with=edit', desc = "editor the file with $EDITOR"},
+	{ on = "e", run = "shell --block '$EDITOR \"$0\"'", desc = "editor the file with $EDITOR"},
+	
+]
