@@ -1,0 +1,4 @@
+set libpath=/home/dralee/Music
+set libpath=~/Music
+add ~/Music
+help
