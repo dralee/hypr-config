@@ -1,0 +1,4 @@
+
+# d for download lyrics
+bind -f common d shell python ~/.config/cmus/auto-download-lyrics.py
+

@@ -1,3 +1,5 @@
+set continue=true
+add /home/dralee/f/KwDownload/song
 set libpath=/home/dralee/Music
 set libpath=~/Music
 add ~/Music

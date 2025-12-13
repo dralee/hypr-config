@@ -93,7 +93,7 @@ def display_lyrics(lyrics, position):
     os.system('clear')
 
     if not lyrics:
-        print("\n\n  🎵 未找到歌词文件\n")
+        print("\n\n \033[31m 🎵 未找到歌词文件\033[0m\n") # red
         print("  请将 .lrc 文件放在音乐文件同目录下")
         return
 
@@ -107,7 +107,7 @@ def display_lyrics(lyrics, position):
 
     # 显示上下文歌词
     print("\n" + "="*60)
-    print("  🎵 歌词显示")
+    print("  \033[34m🎵\033[0m \033[34m歌词显示\033[0m") # blue
     print("="*60 + "\n")
 
     start = max(0, current_idx - 3)
@@ -116,7 +116,7 @@ def display_lyrics(lyrics, position):
     for i in range(start, end):
         timestamp, text = lyrics[i]
         if i == current_idx:
-            print(f"  ► {text}")
+            print(f"  \033[31m►\033[0m \033[36m{text}\033[0m") # cyan
         else:
             print(f"    {text}")
 
@@ -131,12 +131,12 @@ def main():
         status = get_cmus_status()
 
         if not status:
-            print("\n\n  ⏸  cmus 未运行或未播放\n")
+            print("\r \033[31m ⏸  cmus 未运行或未播放\033[0m", end='',flush=True) # red
             time.sleep(2)
             continue
 
         if status.get('status') != 'playing':
-            print("\n\n  ⏸  已暂停\n")
+            print("\r ⏸  已暂停",end='',flush=True)
             time.sleep(1)
             continue
 
