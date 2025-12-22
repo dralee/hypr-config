@@ -1,7 +1,12 @@
 patch:
+  symbols:
+    dictionary: symbols
+    initial_quality: -1
+    enable_completion: true
+
   switches:
     - name: ascii_mode
-      reset: 0
+      reset: 1
       states: [ 中文, 西文 ]
     - name: full_shape
       states: [ 半角, 全角 ]
@@ -37,6 +42,7 @@ patch:
       - punct_translator
       - reverse_lookup_translator
       - table_translator
+      - table_translator@symbols
     filters:
       - simplifier
       - uniquifier
@@ -52,3 +58,4 @@ patch:
     option_name: emoji_suggestion
     tips: none
     inherit_comment: false
+

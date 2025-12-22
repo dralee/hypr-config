@@ -5,7 +5,7 @@
   "prettier.bracketSpacing": false,
   "languageserver": {
     "sql": {
-      "module": "/usr/lib/node_modules/sql-language-server/dist/bin/cli.js",
+      "module": "/usr/local/lib/node_modules/sql-language-server/dist/bin/cli.js",
       "args": [
         "up",
         "--method",
@@ -14,53 +14,6 @@
       "filetypes": [
         "sql",
         "mysql"
-      ]
-    },
-    "dockerfile": {
-      "command": "docker-langserver",
-      "filetypes": [
-        "dockerfile"
-      ],
-      "args": [
-        "--stdio"
-      ]
-    },
-    "dockercompose": {
-      "command": "docker-compose-langserver",
-      "args": [
-        "--stdio"
-      ],
-      "filetypes": [
-        "dockercompose"
-      ],
-      "rootPatterns": [
-        ".git",
-        ".env",
-        "docker-compose.yml",
-        "compose.yml"
-      ]
-    },
-    "lua": {
-      "command": "~/.local/share/lsp/lua-language-server/bin/lua-language-server",
-      "args": [],
-      "rootPatterns": [
-        ".git"
-      ],
-      "filetypes": [
-        "lua"
-      ]
-    },
-    "meson": {
-      "command": "mesonlsp",
-      "rootPatterns": [
-        "meson.build",
-        "meson_options.txt"
-      ],
-      "args": [
-        "--lsp"
-      ],
-      "filetypes": [
-        "meson"
       ]
     },
     "systemd-language-server": {
@@ -73,6 +26,16 @@
       "command": "~/.local/share/lsp/kotlin-server/bin/kotlin-language-server",
       "filetypes": [
         "kotlin"
+      ]
+    },
+    "lua": {
+      "command": "~/.local/share/lsp/lua-language-server/bin/lua-language-server",
+      "args": [],
+      "rootPatterns": [
+        ".git"
+      ],
+      "filetypes": [
+        "lua"
       ]
     }
   }
