@@ -37,7 +37,7 @@
 	//"custom/media",
         "temperature",
 	"pulseaudio",
-	"bluetooth",
+	//"bluetooth",
         //"custom/keyboard-layout"
         //"battery",
 	//"custom/weather",
@@ -170,6 +170,7 @@
 		"(.*) - Typora": "<span size='13pt' color='#EAEAEA'>\ue73e</span>  $1",
 		"Telegram (.*)": "<span size='13pt' color='#31A8E0'>\ue217</span>  $1",
 		"微信(.*)": "<span size='13pt' color='#0FC81D'>\uf1d7</span> $1",
+		"Weixin(.*)": "<span size='13pt' color='#0FC81D'>\uf1d7</span> $1",
 		"QQ(.*)": "<span size='13pt' color='#5298CC'>\uf1d6</span> $1",
 		"(.*) - Navicat Premium": "<span size='13pt' color='#EFDC5D'>\ue704</span> $1",
 		"vim (.*)": "<span size='13pt' color='#019331'>\ue7c5</span>  $1",
@@ -289,13 +290,13 @@
     },
 
     "bluetooth": {
-		"format": " {status}",
-		"format-connected": " {device_alias}",
-		"format-connected-battery": " {device_alias} {device_battery_percentage}%",
-		// "format-device-preference": [ "device1", "device2" ], // preference list deciding the displayed device
-		"tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
-		"tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
-		"tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
-		"tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%"
+	"format": " {status}",
+	"format-connected": " {device_alias}",
+	"format-connected-battery": " {device_alias} {device_battery_percentage}%",
+	// "format-device-preference": [ "device1", "device2" ], // preference list deciding the displayed device
+	"tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+	"tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+	"tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+	"tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%"
     }
 }
