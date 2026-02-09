@@ -96,6 +96,7 @@ cp -r $HOME/$firefox_default_chrome/. $firefox_default_chrome
 # clear not need
 rm -rf $hyprland_dir_scripts/poem/__pycache__/
 rm $hyprland_dir_scripts/dbus-monitor/*.log
+rm $hyprland_dir_scripts/dbus-monitor/nohup.out
 rm -rf $waybar_dir/scripts/poem/__pycache__/
 rm -rf $ranger_dir/plugins/__pycache__/
 rm -rf $ranger_dir/plugins/ranger_devicons/.git/
