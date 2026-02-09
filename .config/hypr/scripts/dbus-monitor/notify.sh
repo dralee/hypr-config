@@ -16,6 +16,6 @@ if [[ "$clear_it" =~ ^[Yy] ]];then
 	exit 0
 fi
 
-line=`head -n 1 $src_file | sed 's#【Feishu】# 󱗆#g' | cut -c 1-60`
+line=`head -n 1 $src_file | sed 's#【Feishu】# 󱗆 #g' | cut -c 1-60`
 echo $line
 
