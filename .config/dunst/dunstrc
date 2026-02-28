@@ -1,0 +1,70 @@
+[global]
+monitor = 0
+follow = mouse
+
+width = (320, 420)
+height = 300
+origin = top-right
+offset = (20, 20)
+
+notification_limit = 6
+
+### 字体 ###
+font = JetBrainsMono Nerd Font 11
+line_height = 3
+markup = full
+
+### 玻璃效果 ###
+transparency = 15
+corner_radius = 14
+separator_height = 2
+padding = 16
+horizontal_padding = 16
+text_icon_padding = 12
+
+### 图标 ###
+icon_position = left
+min_icon_size = 32
+max_icon_size = 48
+icon_theme = Papirus-Dark
+
+### 进度条 ###
+progress_bar = true
+progress_bar_height = 6
+progress_bar_frame_width = 1
+
+### 行为 ###
+mouse_left_click = close_current
+mouse_middle_click = do_action
+mouse_right_click = close_all
+
+show_indicators = yes
+enable_recursive_icon_lookup = true
+history_length = 100
+sticky_history = yes
+
+[urgency_low]
+timeout = 4
+background = "#1e1e2eee"
+foreground = "#cdd6f4"
+frame_color = "#313244"
+
+[urgency_normal]
+timeout = 6
+background = "#1e1e2eee"
+foreground = "#cdd6f4"
+frame_color = "#89b4fa"
+
+[urgency_critical]
+timeout = 0
+background = "#1e1e2eee"
+foreground = "#f38ba8"
+frame_color = "#f38ba8"
+
+
+[telegram]
+appname = TelegramDesktop
+frame_color = "#a6e3a1"
+timeout = 8
+
+

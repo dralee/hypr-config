@@ -47,6 +47,7 @@ fish_config=$config_dir/fish/config.fish
 khal_config=$config_dir/khal/config
 kitty_config=$config_dir/kitty/kitty.conf
 mako_config=$config_dir/mako/config
+dunst_config=$config_dir/dunst/dunstrc
 fcitx5_profile=$fcitx5_dir/profile
 
 # mkdir
@@ -63,6 +64,7 @@ mkdir -p $config_dir/flameshot
 mkdir -p $config_dir/khal
 mkdir -p $config_dir/kitty
 mkdir -p $config_dir/mako
+mkdir -p $config_dir/dunst
 mkdir -p $typora_themes_dir
 mkdir -p $vim_dir
 mkdir -p $firefox_default_chrome
@@ -136,6 +138,7 @@ cp $HOME/$flameshot_config $flameshot_config
 cp $HOME/$khal_config $khal_config
 cp $HOME/$kitty_config $kitty_config
 cp $HOME/$mako_config $mako_config
+cp $HOME/$dunst_config $dunst_config
 cp $HOME/$fcitx5_profile $fcitx5_profile
 
 # set executable shell
