@@ -94,7 +94,7 @@ html {
 
 html,
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-family: "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, "PingFang SC", sans-serif;
 
     text-align: var(--text-align);
 
@@ -926,7 +926,7 @@ h6 code {
 code {
     background-color: rgba(221, 235, 213, 0.5);
     color: #359d09;
-    font-family: "Fira Code", Consolas, "Lucida Console", "Courier", monospace, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Microsoft YaHei", "Fira Code", Consolas, "Lucida Console", "Courier", monospace, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 1rem;
     font-weight: 550;
     margin: 0 2px;
@@ -995,7 +995,7 @@ a img {
 
 /* code fences */
 .md-fences {
-    font-family: "Fira Code", Consolas, "Lucida Console", "Courier", monospace, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Microsoft YaHei", "Fira Code", Consolas, "Lucida Console", "Courier", monospace, "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #2f4f4f;
     background-color: #FFFFFF;
     padding: 17px;
@@ -1235,7 +1235,7 @@ a img {
 
 /* preferences */
 .ty-preferences {
-    font-family: "Fira Code", Consolas, "Lucida Console", "Courier", monospace, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Microsoft YaHei", "Fira Code", Consolas, "Lucida Console", "Courier", monospace, "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #282c34;
 }
 
@@ -1421,7 +1421,7 @@ a img {
 
 /* source code mode */
 #typora-source {
-    font-family: "Fira Code", Consolas, "Lucida Console", "Courier", monospace, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Microsoft YaHei", "Fira Code", Consolas, "Lucida Console", "Courier", monospace, "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #6a6a6a;
 }
 
