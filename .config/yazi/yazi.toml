@@ -18,22 +18,22 @@ view = [
 
 [open]
 prepend_rules = [
-	{ name = "*.json", use = "edit" },
+	{ url = "*.json", use = "edit" },
 
 	# Multiple openers for a single rule
-	{ name = "*.html", use = [ "open", "edit" ] },
-	{ name = "*.md", use = [ "edit" ] },
+	{ url = "*.html", use = [ "open", "edit" ] },
+	{ url = "*.md", use = [ "edit" ] },
 	# image
 	{ mime = "image/*", use = [ "view" ] },
 ]
 append_rules = [
-	{ name = "*", use = "my-fallback" },
+	{ url = "*", use = "binary" },
 ]
 
 
 #[plugin]
 #prepend_previewers = [
-# { name = "*.gz", run = "zless-preview" },
+# { url = "*.gz", run = "zless-preview" },
 #]
 [plugin]
 prepend_preloaders = [
@@ -46,13 +46,13 @@ prepend_preloaders = [
 prepend_previewers = [
 	#{ mime = "application/{*zip,tar,bzip2,7z*,rar,xz,zstd,java-archive}", 	run  = "ouch" }, # ouch
 	# piper for gz,xz
-	{ name = "*.tar*", run = 'piper --format=name -- tar tf "$1"'}, # tar tf xxx
-    { name = "*.csv", run = "rich-preview"}, # for csv files
-    { name = "*.md", run = "rich-preview" }, # for markdown (.md) files
-    { name = "*.rst", run = "rich-preview"}, # for restructured text (.rst) files
-    { name = "*.ipynb", run = "rich-preview"}, # for jupyter notebooks (.ipynb)
-    { name = "*.json", run = "rich-preview"}, # for json (.json) files
-#    { name = "*.lang_type", run = "rich-preview"} # for particular language files eg. .py, .go., .lua, etc.
+	{ url = "*.tar*", run = 'piper --format=name -- tar tf "$1"'}, # tar tf xxx
+    { url = "*.csv", run = "rich-preview"}, # for csv files
+    { url = "*.md", run = "rich-preview" }, # for markdown (.md) files
+    { url = "*.rst", run = "rich-preview"}, # for restructured text (.rst) files
+    { url = "*.ipynb", run = "rich-preview"}, # for jupyter notebooks (.ipynb)
+    { url = "*.json", run = "rich-preview"}, # for json (.json) files
+#    { url = "*.lang_type", run = "rich-preview"} # for particular language files eg. .py, .go., .lua, etc.
 
 # zoom
 #	{ mime = "image/{jpeg,png,webp}", run = "zoom 5"},
