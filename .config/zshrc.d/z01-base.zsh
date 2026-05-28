@@ -7,11 +7,17 @@ autoload -Uz compinit && compinit
 autoload -Uz colors && colors
 
 bindkey -e
-bindkey '^[[H' beginning-of-line
-bindkey '^[[F' end-of-line
+bindkey "^[[H" beginning-of-line
+bindkey "^[[F" end-of-line
 
-bindkey '^[[1~' beginning-of-line
-bindkey '^[[4~' end-of-line
+bindkey "^[[3~" delete-char
+
+bindkey "^[[1~" beginning-of-line
+bindkey "^[[4~" end-of-line
+
+bindkey "^[[7~" beginning-of-line
+bindkey "^[[8~" end-of-line
+
 
 HISTSIZE=10000
 SAVEHIST=10000
@@ -25,11 +31,6 @@ setopt interactivecomments
 
 # autoload -Uz compinit && compinit
 
-source /usr/share/fzf/key-bindings.zsh
-source /usr/share/fzf/completion.zsh
 
 
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 

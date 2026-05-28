@@ -22,3 +22,5 @@ zstyle ':completion:*' cache-path ~/.cache/zsh/
 
 # process completion
 zstyle ':completion:*:processes' command 'ps -u $USER -o pid,cmd'
+
+
