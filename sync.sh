@@ -98,6 +98,7 @@ cp -r $HOME/$yazi_dir/. $yazi_dir
 cp -r $HOME/$firefox_default_chrome/. $firefox_default_chrome
 
 # clear not need
+rm -rf $hyprland_dir/card*
 rm -rf $hyprland_dir_scripts/poem/__pycache__/
 rm $hyprland_dir_scripts/dbus-monitor/*.log
 rm $hyprland_dir_scripts/dbus-monitor/nohup.out
