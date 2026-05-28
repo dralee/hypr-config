@@ -34,6 +34,7 @@ etc_dir=/etc
 usr_dir=/usr
 firefox_default_chrome=$mozilla_dir/firefox/71ul370y.default-release/chrome
 yazi_dir=$config_dir/yazi
+zsh_dir=$config_dir/zshrc.d
 
 # file
 #hyprland_config=$hyprland_dir/hyprland.conf
@@ -50,6 +51,8 @@ kitty_config=$config_dir/kitty/kitty.conf
 mako_config=$config_dir/mako/config
 dunst_config=$config_dir/dunst/dunstrc
 fcitx5_profile=$fcitx5_dir/profile
+zsh_config=.zshrc
+zsh_theme_config=.p10k.zsh
 
 # mkdir
 local_path=$local_dir/share
@@ -70,6 +73,7 @@ mkdir -p $typora_themes_dir
 mkdir -p $vim_dir
 mkdir -p $firefox_default_chrome
 mkdir -p $yazi_dir
+mkdir -p $zsh_dir
 
 # cp dir
 #echo cp $HOME/$hyprland_dir_scripts $hyprland_dir_scripts
@@ -96,6 +100,7 @@ cp -r $HOME/$vim_dir/. $vim_dir
 cp -r $HOME/$yazi_dir/. $yazi_dir
 #rsync -av --exclude '*/.git/' --exclude='*/.github/' $HOME/$vim_dir/. $vim_dir
 cp -r $HOME/$firefox_default_chrome/. $firefox_default_chrome
+cp -r $HOME/$zsh_dir/. $zsh_dir
 
 # clear not need
 rm -rf $hyprland_dir/card*
@@ -143,6 +148,8 @@ cp $HOME/$kitty_config $kitty_config
 cp $HOME/$mako_config $mako_config
 cp $HOME/$dunst_config $dunst_config
 cp $HOME/$fcitx5_profile $fcitx5_profile
+cp $HOME/$zsh_config $zsh_config
+cp $HOME/$zsh_theme_config $zsh_theme_config
 
 # set executable shell
 find . -type f \( -name "*.sh" -o -name "*.fish" \) -exec git add --chmod=+x {} +
