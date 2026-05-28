@@ -60,6 +60,6 @@ hl.window_rule({
     name = "workspace10",
     workspace = 10,
     match = {
-        initial_class = "(*Opera)"
+        initial_class = "(Opera)"
     }
 })

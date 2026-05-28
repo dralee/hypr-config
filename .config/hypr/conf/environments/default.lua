@@ -49,10 +49,6 @@ hl.env("GLFW_IM_MODULE", "fcitx")
 hl.env("INPUT_METHOD", "fcitx")
 hl.env("XMODIFIERS", "fcitx")
 hl.env("IMSETTINGS_MODULE", "fcitx")
--- GT710
-hl.env("WLR_RENDERER_ALLOW_SOFTWARE", "1")
-hl.env("WLR_DRM_NO_ATOMIC", "1")
-hl.env("AQ_DRM_DEVICES", "/dev/dri/card0")
 
 -- for waybar env
 -- custom/weather2 shenzhen location id

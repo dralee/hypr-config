@@ -30,19 +30,8 @@ hl.on("hyprland.start", function ()
     hl.exec_cmd("udiskie &")
     -- network connect mgr
     hl.exec_cmd("nm-applet")
-    -- hypridle
-    hl.exec_cmd("hypridle")
-    -- typora
-    hl.exec_cmd("$HOME/Application/Typora-linux-x64/Typora --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime")
-    -- qq
-    hl.exec_cmd("$HOME/Application/QQ.AppImage --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime")
-    -- wechat
-    hl.exec_cmd("/usr/bin/wechat %u")
-    -- feishu
-    hl.exec_cmd("/usr/bin/feishu --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime %U")
+    
     -- awww wallpapers
     hl.exec_cmd("awww img \"$HOME/.config/wallpapers/126901-ocean.jpg\"")
-    -- dbus monitors
-    hl.exec_cmd("$HOME/.config/hypr/scripts/dbus-monitor/dbus-notification-monitor-linux-amd64 -c $HOME/.config/hypr/scripts/dbus-monitor/notification-monitor.conf")
 
 end)
