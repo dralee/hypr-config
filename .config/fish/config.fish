@@ -41,4 +41,5 @@ source ~/Application/shells/fish/tod.sh
 source ~/Application/shells/fish/tom.sh
 source ~/.config/environment
 source ~/Application/shells/fish/y.sh
+source ~/Application/shells/fish/checkout-pull-git.sh
 
