@@ -35,6 +35,11 @@ zsh
 source ~/.zshrc
 
 ```
+install for single command:
+```bash
+sudo pacman -S zsh zsh-syntax-highlighting zsh-autosuggestions eza bat fd ripgrep fzf zsh-theme-powerlevel10k-git
+```
+
 
 #### 设置默认shell
 可选，替换为默认shell

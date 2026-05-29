@@ -26,12 +26,13 @@ hl.on("hyprland.start", function ()
     -- -------------------------------------------------------------------------------------------
     -- custom app start
     -- -------------------------------------------------------------------------------------------
+    -- awww wallpapers
+    hl.exec_cmd("awww img \"$HOME/.config/wallpapers/126901-ocean.jpg\"")
+
     -- usb
     hl.exec_cmd("udiskie &")
     -- network connect mgr
     hl.exec_cmd("nm-applet")
-    
-    -- awww wallpapers
-    hl.exec_cmd("awww img \"$HOME/.config/wallpapers/126901-ocean.jpg\"")
+
 
 end)
