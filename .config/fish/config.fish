@@ -15,7 +15,7 @@ set -x MESSAGE_HOST_ENVIRONMENT Dev
 set -x ASPNETCORE_ENVIRONMENT Dev
 set -x JAVA_HOME /usr/lib/jvm/java-21-openjdk
 set -x PATH $PATH $JAVA_HOME/bin
-set -x MAVEN_HOME "/home/dralee/Application/java/maven/apache-maven-3.9.6"
+set -x MAVEN_HOME "$HOME/Application/java/maven/apache-maven-3.9.6"
 set -x PATH $PATH $MAVEN_HOME/bin
 set -x CPAPI_HOST_ENVIRONMENT Development
 set -x ASPNETCORE_ENVIRONMENT Dev

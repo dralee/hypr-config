@@ -3,7 +3,7 @@
 使用如`luarocks --lua-version=5.1 install md5`方式安装，该安装方式默认位置为`~/.luarocks`下，因此使用类库时，需要在lua脚本前，引入该路径：
 ```lua
 -- 加载luajit版本(即lua5.1)版本的库
-package.cpath = package.cpath .. ";/home/dralee/.luarocks/lib/lua/5.1/?.so"
+package.cpath = package.cpath .. ";$HOME/.luarocks/lib/lua/5.1/?.so"
 ```
 * 如cjson
 ```bash
@@ -16,7 +16,7 @@ luarocks --lua-version=5.1 install md5
 
 之后再使用类库
 ```lua
-package.cpath = package.cpath .. ";/home/dralee/.luarocks/lib/lua/5.1/md5/?.so"
+package.cpath = package.cpath .. ";$HOME/.luarocks/lib/lua/5.1/md5/?.so"
 local cjson = require("cjson")
 local md5 = require("md5")
 
