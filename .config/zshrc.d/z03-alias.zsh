@@ -9,7 +9,11 @@ alias y='yazi'
 
 alias gs='git status'
 alias ga='git add'
-alias gc='git commit'
+alias gc='git checkout'
+alias gm='git commit'
+alias gtl='git stash list'
+alias gtp='git stash pop'
+alias gt='git stash'
 alias gpl='git pull'
 alias gp='git push'
 alias auto-ug-mihomo='$HOME/Application/shells/auto-mihomo-upgrade.sh'
@@ -22,6 +26,13 @@ alias loop-call='$HOME/Application/shells/request/loop-call.sh'
 alias request-for='$HOME/Application/shells/request/request-for-url.sh'
 alias wg-down='sudo systemctl stop wg-quick@wg0'
 alias wg-up='sudo systemctl start wg-quick@wg0'
+
+# ip for public
+alias ipx='curl -L -s http://ipecho.net/plain, curl -L -s http://whatismijnip.nl'
+# check the response of the site, $1, eg: csite https://www.google.com
+alias csite="curl -s -w \
+     '\nLookup time:\t%{time_namelookup}\nConnect time:\t%{time_connect}\nAppCon time:\t%{time_appconnect}\nRedirect time:\t%{time_redirect}\nPreXfer time:\t%{time_pretransfer}\nStartXfer time:\t%{time_starttransfer}\n\nTotal time:\t%{time_total}\n' \
+     -o /dev/null"
 
 # work fish alias
 alias abk='$HOME/Application/shells/auto-back.sh'
