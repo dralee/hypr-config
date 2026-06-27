@@ -1,4 +1,5 @@
-PymodePython from pymode.lint import code_check
+" Note: code_check is imported lazily in pymode#lint#check() to avoid
+" importing Python modules before paths are initialized
 
 call pymode#tools#signs#init()
 call pymode#tools#loclist#init()
@@ -12,8 +13,12 @@ fun! pymode#lint#auto() "{{{
     PymodePython auto()
     cclose
     call g:PymodeSigns.clear()
-    edit
-    call pymode#wide_message("AutoPep8 done.")
+    " Save the formatted buffer, then reload to ensure file is in sync
+    if &modified
+        noautocmd write
+    endif
+    edit!
+    call pymode#wide_message("Ruff format done.")
 endfunction "}}}
 
 
@@ -57,6 +62,8 @@ fun! pymode#lint#check() "{{{
 
     call pymode#wide_message('Code checking is running ...')
 
+    " Import code_check lazily here to ensure Python paths are initialized
+    PymodePython from pymode.lint import code_check
     PymodePython code_check()
 
     if loclist.is_empty()

@@ -737,6 +737,13 @@ class PatchedASTTest(unittest.TestCase):
         checker.check_region("Global", 0, len(source) - 1)
         checker.check_children("Global", ["global", " ", "a", "", ",", " ", "b"])
 
+    def test_nonlocal_node(self):
+        source = "nonlocal a, b\n"
+        ast_frag = patchedast.get_patched_ast(source, True)
+        checker = _ResultChecker(self, ast_frag)
+        checker.check_region("Nonlocal", 0, len(source) - 1)
+        checker.check_children("Nonlocal", ["nonlocal", " ", "a", "", ",", " ", "b"])
+
     def test_if_node(self):
         source = "if True:\n    pass\nelse:\n    pass\n"
         ast_frag = patchedast.get_patched_ast(source, True)
@@ -1146,6 +1153,28 @@ class PatchedASTTest(unittest.TestCase):
         node_to_test = "Try"
         expected_children = ["try", "", ":", "\n    ", "Pass", "\n", "ExceptHandler", "\n", "finally", "", ":", "\n    ", "Pass"]
         checker.check_children(node_to_test, expected_children)
+
+    @testutils.only_for_versions_higher("3.11")
+    def test_try_except_group_node(self):
+        source = dedent("""\
+            try:
+                pass
+            except* (ValueError, IOError) as e:
+                pass
+            except* ZeroDivisionError as e:
+                pass
+        """)
+        ast_frag = patchedast.get_patched_ast(source, True)
+        checker = _ResultChecker(self, ast_frag)
+        checker.check_children(
+            "TryStar",
+            ["try", "", ":", "\n    ", "Pass", "\n", "ExceptHandler", "\n", "ExceptHandler"],
+        )
+        expected_child = "e"
+        checker.check_children(
+            "ExceptHandler",
+            ["except", "* ", "Name", " ", "as", " ", expected_child, "", ":", "\n    ", "Pass"],
+        )
 
     def test_ignoring_comments(self):
         source = "#1\n1\n"

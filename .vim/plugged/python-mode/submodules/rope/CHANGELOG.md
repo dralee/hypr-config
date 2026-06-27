@@ -1,5 +1,44 @@
 # **Upcoming release**
 
+- ...
+
+# Release 1.13.0
+
+- #781, #783 Isolate tests that uses external_fixturepkg into a venv (@lieryan)
+- #751 Check for ast.Attributes when finding occurrences in fstrings (@sandratsy)
+- #777, #698 add validation to refuse Rename refactoring to a python keyword (@lieryan)
+- #730 Match on module aliases for autoimport suggestions (@MrBago)
+- #755 Remove dependency on `build` package being installed while running tests (@lieryan)
+- #780 Improved function parser to use ast parser instead of Worder (@lieryan)
+- #752 Update pre-commit (@bagel897)
+- #782 Integrate codecov with GHA (@lieryan)
+- #754 Minor type hint improvements (@lieryan)
+
+# Release 1.12.0
+
+- #733 skip directories with perm error when building autoimport index (@MrBago)
+- #722, #723 Remove site-packages from packages search tree (@tkrabel)
+- #738 Implement os.PathLike on Resource (@lieryan)
+- #739, #736 Ensure autoimport requests uses indexes (@lieryan)
+- #734, #735 raise exception when extracting the start of a block without the end
+
+# Release 1.11.0
+
+- #710, #561 Implement `except*` syntax (@lieryan)
+- #711 allow building documentation without having rope module installed (@kloczek)
+- #719 Allows the in-memory db to be shared across threads (@tkrabel)
+- #720 create one sqlite3.Connection per thread using a thread local (@tkrabel)
+- #715 change AutoImport's `get_modules` to be case sensitive (@bagel897)
+
+# Release 1.10.0
+
+- #708, #709 Add support for Python 3.12 (@lieryan)
+
+# Release 1.9.0
+
+- #624, #693 Implement `nonlocal` keyword (@lieryan)
+- #697, #565 Automatically purge autoimport.db when there is schema change
+
 # Release 1.8.0
 
 - #650 Install pre-commit hooks on rope repository (@lieryan)

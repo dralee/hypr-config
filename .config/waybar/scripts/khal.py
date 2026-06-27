@@ -5,7 +5,7 @@ khal luanar calendar
 2024.05.13 by dralee
 2025.1.22 by dralee support the poem show
 question:
-    the waybay tooltip use gtk label which only support span and the font show label, 
+    the waybay tooltip use gtk label which only support span and the font show label,
     not any others UI html tag, the calendar couldn't show the grid, so short for it
     https://docs.gtk.org/Pango/pango_markup.html
 """
@@ -22,7 +22,7 @@ from poem.poem_show import PoemShow
 
 class Day:
     def __init__(self):
-        self.day = 0 
+        self.day = 0
         self.text = ''
         self.isFestival = False
         self.isToday = False
@@ -61,46 +61,46 @@ class Calendar:
         text = lunar.getDayInChinese()
         if (1 == lunar.getDay()):
             text = lunar.getMonthInChinese() + '月'
-        
+
         otherFestivals = d.getOtherFestivals()
         if len(otherFestivals) > 0:
             text = otherFestivals[0]
             day.isFestival = True
-        
+
         otherFestivals = lunar.getOtherFestivals()
         if len(otherFestivals) > 0:
             text = otherFestivals[0]
             day.isFestival = True
-        
+
         festivals = d.getFestivals()
         if len(festivals) > 0:
             text = festivals[0]
             day.isFestival = True
-        
+
         festivals = lunar.getFestivals()
         if len(festivals) > 0:
             text = festivals[0]
             day.isFestival = True
-        
+
         jq = lunar.getJieQi()
         if jq:
             text = jq
             day.isFestival = True
-        
+
         day.text = text
         if d.toYmd() == now.toYmd():
             day.isToday = True
-        
+
         if d.getMonth() != month:
             day.isOther = True
-        
+
         h = HolidayUtil.getHoliday(d.getYear(), d.getMonth(), d.getDay())
         if h:
             day.isHoliday = True
             day.isRest = not h.isWork()
-        
+
         return day
-        
+
     def build(self,now):
         a = Solar.fromDate(datetime.datetime.now())
         #print(a.getMonth())
@@ -120,7 +120,7 @@ class Calendar:
     def build_calendar(self):
         now = Solar.fromDate(datetime.datetime.now())
         days = self.build(now)
-        
+
         #print("now:", now.getYear(), now.getMonth(), now.getWeek())
 
         data = {}
@@ -134,13 +134,13 @@ class Calendar:
                 content += '\n'
             index += 1
         data['tooltip'] = content
-                
+
         print(json.dumps(data))
 
         return data
 
     def __week(self, w):
-        """数字转周几"""        
+        """数字转周几"""
         return self.week.get(w)
 
     def event(self):
@@ -190,7 +190,7 @@ class Calendar:
         poem = self.poem.run(self.change)
         content = '<span font="Microsoft YaHei"><span>{} <span font_weight="bold" color="#B4D4FF">{}</span></span>\n<span><span color="#40E2B3" size="larger">\ue369</span> {}月{}</span>{}{}\n{}</span>'\
             .format(day, self.week[day.getWeek()], lunar.getMonthInChinese(), lunar.getDayInChinese(), holiday, e_str, poem)
-        
+
         data = {}
         data['text'] = '<span color="#7469B6">\udb80\udcf6</span>'
         data['tooltip'] = content

@@ -56,6 +56,7 @@ zsh_theme_config=.p10k.zsh
 
 # mkdir
 local_path=$local_dir/share
+usr_zsh=$usr_dir/zsh
 mkdir -p $config_dir
 mkdir -p $local_path
 #mkdir -p $hyprland_dir_scripts
@@ -74,6 +75,7 @@ mkdir -p $vim_dir
 mkdir -p $firefox_default_chrome
 mkdir -p $yazi_dir
 mkdir -p $zsh_dir
+mkdir -p usr/zsh
 
 # cp dir
 #echo cp $HOME/$hyprland_dir_scripts $hyprland_dir_scripts
@@ -101,6 +103,7 @@ cp -r $HOME/$yazi_dir/. $yazi_dir
 #rsync -av --exclude '*/.git/' --exclude='*/.github/' $HOME/$vim_dir/. $vim_dir
 cp -r $HOME/$firefox_default_chrome/. $firefox_default_chrome
 cp -r $HOME/$zsh_dir/. $zsh_dir
+cp -r $usr_zsh/. usr/zsh 
 
 # clear not need
 rm -rf $hyprland_dir/card*

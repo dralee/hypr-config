@@ -27,9 +27,19 @@
   still need to use it with python2 you should look for the `last-py2-support`
   branch and/or tag.
 
+  * From version 0.15.0 onwards, python-mode uses **Ruff** for linting and formatting,
+  replacing 7 legacy submodules (pyflakes, pycodestyle, mccabe, pylint, pydocstyle,
+  pylama, autopep8). This reduces the repository size significantly (from 13 to 3
+  submodules) and improves performance. See [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md)
+  for migration details.
+
 If you are a new user please clone the repos using the recursive flag:
 
 > git clone --recurse-submodules https://github.com/python-mode/python-mode
+
+**Repository size:** The repository now includes only 3 essential submodules (rope,
+pytoolconfig, tomli), down from 13 previously. This reduces clone size and improves
+maintenance. Ruff is installed separately via `pip install ruff`.
 
 -------------------------------------------------------------------------------
 
@@ -56,7 +66,7 @@ Why Python-mode?
 
 The plugin contains all you need to develop python applications in Vim.
 
-* Support Python and 3.6+
+* Support Python 3.10.13, 3.11.9, 3.12.4, 3.13.0
 * Syntax highlighting
 * Virtualenv support
 * Run python code (`<leader>r`)
@@ -83,6 +93,12 @@ Another old presentation here: <http://www.youtube.com/watch?v=YhqsjUUHj6g>.
 
 Vim >= 7.3 (most features needed +python3 support) (also
 `--with-features=big` if you want `g:pymode_lint_signs`).
+
+**Python dependencies:**
+- **Ruff** - Required for linting and formatting. Install with: `pip install ruff`
+  - Ruff replaces the previous linting tools (pyflakes, pycodestyle, mccabe, pylint, pydocstyle, pylama, autopep8)
+  - See [Ruff documentation](https://docs.astral.sh/ruff/) for installation options
+  - Verify installation: `./scripts/verify_ruff_installation.sh`
 
 # How to install
 
@@ -143,6 +159,41 @@ Then rebuild **helptags** in vim:
 **filetype-plugin** (`:help filetype-plugin-on`) and **filetype-indent**
 (`:help filetype-indent-on`) must be enabled to use python-mode.
 
+# Docker Testing Environment
+
+For consistent testing across different Python versions, python-mode provides a
+Docker-based testing environment. This is especially useful for contributors
+and developers who want to test the plugin with different Python versions.
+
+## Quick Start
+
+```bash
+# Run tests with default Python version (3.13.0)
+./scripts/user/run-tests-docker.sh
+
+# Run tests with specific Python version
+./scripts/user/run-tests-docker.sh 3.11
+
+# Run tests with all supported Python versions
+./scripts/user/test-all-python-versions.sh
+```
+
+## Supported Python Versions
+
+The Docker environment supports the following Python versions:
+- 3.10.13
+- 3.11.9
+- 3.12.4
+- 3.13.0 (default)
+
+For detailed information about the Docker testing environment, see
+[README-Docker.md](README-Docker.md).
+
+## Prerequisites
+
+- Docker
+- Docker Compose
+
 # Troubleshooting/Debugging
 
 First read our short
@@ -188,6 +239,12 @@ Please, also provide more contextual information such as:
 * `git status` (under your _python-mode_ directory)
 * `tree <python-mode-directory>` or something similar (such as `ls -lR`)
 
+If you're using the Docker testing environment, also provide:
+* The output of `docker --version` and `docker compose version`
+* The Python version used in Docker (if testing with a specific version)
+* Any Docker-related error messages
+* The output of `./scripts/user/run-tests-docker.sh --help` (if available)
+
 # Frequent problems
 
 Read this section before opening an issue on the tracker.
@@ -207,11 +264,49 @@ is a good reference on how to build vim from source.
 help you that much. Look for our branch with python2-support (old version,
 not maintained anymore) (`last-py2-support`).
 
+## Python 3 Support
+
+`python-mode` supports only Python 3. The project has completely removed Python 2
+support since version 0.11.0. Currently supported Python versions are:
+3.10.13, 3.11.9, 3.12.4, and 3.13.0.
+
+If you need Python 2 support, you can use the legacy `last-py2-support` branch,
+but it is no longer maintained.
+
+## Vim Python Support
+
+Vim [has issues](https://github.com/vim/vim/issues/3585) when compiled with
+both Python 2 and Python 3 support. For best compatibility with python-mode,
+build Vim with only Python 3 support. See
+[this guide](https://github.com/ycm-core/YouCompleteMe/wiki/Building-Vim-from-source)
+for building Vim from source.
+
 ## Symlinks on Windows
 
 Users on Windows OS might need to add `-c core.symlinks=true` switch to
 correctly clone / pull repository. Example: `git clone --recurse-submodules
 https://github.com/python-mode/python-mode -c core.symlinks=true`
+
+## Docker Testing Issues
+
+If you encounter issues with the Docker testing environment:
+
+1. **Build Failures**: Ensure Docker and Docker Compose are properly installed
+   and up to date. The Dockerfile requires Ubuntu 24.04 packages.
+
+2. **Python Version Issues**: Verify that the requested Python version is
+   supported (3.10.13, 3.11.9, 3.12.4, 3.13.0). Use the major.minor format
+   (e.g., `3.11`) when specifying versions.
+
+3. **Vim Build Issues**: The Docker environment builds Vim from source with
+   Python support for each version. Ensure sufficient disk space and memory
+   for the build process.
+
+4. **Test Failures**: If tests fail in Docker but pass locally, check that
+   all git submodules are properly initialized and the correct Python version
+   is active.
+
+For detailed troubleshooting, see [README-Docker.md](README-Docker.md).
 
 ## Error updating the plugin
 
@@ -241,6 +336,19 @@ the issue tracker at:
 
 The contributing guidelines for this plugin are outlined at
 `:help pymode-development`.
+
+Before contributing, please:
+
+1. **Test with Docker**: Use the Docker testing environment to ensure your
+    changes work across all supported Python versions (3.10.13, 3.11.9, 3.12.4, 3.13.0)
+
+2. **Run Full Test Suite**: Use `./scripts/user/test-all-python-versions.sh` to test
+    with all supported Python versions
+
+3. **Check CI**: Ensure the GitHub Actions CI passes for your changes
+
+4. **Follow Development Guidelines**: See `:help pymode-development` for detailed
+    development guidelines
 
 * Author: Kirill Klenov (<https://github.com/klen>)
 * Maintainers:

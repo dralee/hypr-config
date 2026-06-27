@@ -9,6 +9,9 @@ class FinalQuery:
     def __repr__(self):
         return f'{self.__class__.__name__}("{self._query}")'
 
+    def explain(self):
+        return FinalQuery("EXPLAIN QUERY PLAN " + self._query)
+
 
 class Query:
     def __init__(self, query: str, columns: List[str]):
@@ -44,7 +47,7 @@ class Query:
         )
 
     def drop_table(self) -> FinalQuery:
-        return FinalQuery(f"DROP TABLE {self.query}")
+        return FinalQuery(f"DROP TABLE IF EXISTS {self.query}")
 
     def delete_from(self) -> FinalQuery:
         return FinalQuery(f"DELETE FROM {self.query}")
@@ -53,13 +56,11 @@ class Query:
 class Model(ABC):
     @property
     @abstractmethod
-    def table_name(self) -> str:
-        ...
+    def table_name(self) -> str: ...
 
     @property
     @abstractmethod
-    def schema(self) -> Dict[str, str]:
-        ...
+    def schema(self) -> Dict[str, str]: ...
 
     @classmethod
     def create_table(cls, connection):
@@ -71,6 +72,41 @@ class Model(ABC):
         connection.execute(
             f"CREATE TABLE IF NOT EXISTS {cls.table_name}({metadata_table_definition})"
         )
+
+
+class Metadata(Model):
+    table_name = "metadata"
+
+    schema = {
+        "version_hash": "TEXT",
+        "hash_data": "TEXT",
+        "created_at": "TEXT",
+    }
+    columns = list(schema.keys())
+    objects = Query(table_name, columns)
+
+
+class Alias(Model):
+    table_name = "aliases"
+    schema = {
+        "alias": "TEXT",
+        "module": "TEXT",
+    }
+    columns = list(schema.keys())
+    objects = Query(table_name, columns)
+
+    @classmethod
+    def create_table(cls, connection):
+        super().create_table(connection)
+        connection.execute(
+            "CREATE INDEX IF NOT EXISTS aliases_alias_nocase ON aliases(alias COLLATE NOCASE)"
+        )
+
+    modules = Query(
+        "(SELECT DISTINCT aliases.*, package, source, type FROM aliases INNER JOIN names on aliases.module = names.module)",
+        columns + ["package", "source", "type"],
+    )
+    search_modules_with_alias = modules.where("alias LIKE (?)")
 
 
 class Name(Model):
@@ -88,9 +124,14 @@ class Name(Model):
     @classmethod
     def create_table(cls, connection):
         super().create_table(connection)
-        connection.execute("CREATE INDEX IF NOT EXISTS name ON names(name)")
-        connection.execute("CREATE INDEX IF NOT EXISTS module ON names(module)")
-        connection.execute("CREATE INDEX IF NOT EXISTS package ON names(package)")
+        # fmt: off
+        connection.execute("CREATE INDEX IF NOT EXISTS names_name ON names(name)")
+        connection.execute("CREATE INDEX IF NOT EXISTS names_module ON names(module)")
+        connection.execute("CREATE INDEX IF NOT EXISTS names_package ON names(package)")
+        connection.execute("CREATE INDEX IF NOT EXISTS names_name_nocase ON names(name COLLATE NOCASE)")
+        connection.execute("CREATE INDEX IF NOT EXISTS names_module_nocase ON names(module COLLATE NOCASE)")
+        connection.execute("CREATE INDEX IF NOT EXISTS names_package_nocase ON names(package COLLATE NOCASE)")
+        # fmt: on
 
     search_submodule_like = objects.where('module LIKE ("%." || ?)')
     search_module_like = objects.where("module LIKE (?)")
@@ -99,6 +140,7 @@ class Name(Model):
 
     search_by_name_like = objects.where("name LIKE (?)")
 
+    search_by_name = objects.where("name IS (?)")
     delete_by_module_name = objects.where("module = ?").delete_from()
 
 

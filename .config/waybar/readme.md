@@ -24,8 +24,13 @@ Or with pango markups in your config file.
       ...
 }
 
-# custom/weather2 need install the python lib
+### custom/weather2 need install the python lib
 ```bash
 pip install pyquery
 ```
+
+### fonts 
+```
+paru -S nerd-fonts-noto-sans-mono
+paru -S awesome-git
 ```

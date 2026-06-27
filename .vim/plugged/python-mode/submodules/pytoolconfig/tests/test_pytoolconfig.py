@@ -5,7 +5,6 @@ from dataclasses import dataclass, fields
 from typing import Tuple
 
 import pytest
-
 from pytoolconfig import PyToolConfig, UniversalKey, field
 from pytoolconfig.sources import IniConfig
 from pytoolconfig.universal_config import UniversalConfig
@@ -102,6 +101,6 @@ def test_fall_through(cwd):
 
 
 def test_universal_key():
-    assert [field.name for field in fields(UniversalConfig)] == [
-        name for name in UniversalKey.__members__
-    ]
+    assert [field.name for field in fields(UniversalConfig)] == list(
+        UniversalKey.__members__,
+    )

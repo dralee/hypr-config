@@ -46,6 +46,10 @@ hl.bind("CTRL + ALT + E", hl.dsp.exec_cmd("hyprshot -m region -r - | swappy -f")
 hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("notify-send \"start record\" \"recording to $HOME/Videos/record-xxxx.mp4\" && wf-recorder -g \"$(slurp)\" -f \"$HOME/Videos/record-`date +'%Y%m%d%H%M%S'`.mp4\""))
 hl.bind(mainMod .. " + SHIFT + D", hl.dsp.exec_cmd("pkill wf-recorder && notify-send \"finish\" \"record save in $HOME/Videos/record-`date +'%Y%m%d%H%M%S'`.mp4\""))
 
+-- music
+hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exec_cmd("$HOME/.config/cmus/cmus-display.sh"))
+hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd("$HOME/.config/shells/audio-switch.sh"))
+
 -- music control
 hl.bind(mainMod .. " + ALT + left", hl.dsp.exec_cmd("playerctl previous"))
 hl.bind(mainMod .. " + ALT + right", hl.dsp.exec_cmd("playerctl next"))

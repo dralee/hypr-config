@@ -1,0 +1,7 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =5
+let g:netrw_dirhist_5='/home/dralee/f/workspace/gitlab/z9yun-group2/z9yun-backend-java-xxl-jobhandler'
+let g:netrw_dirhist_4='/usr/share/sddm/themes/simple-sddm-2/Backgrounds'
+let g:netrw_dirhist_3='/usr/share/sddm/themes/simple-sddm-2'
+let g:netrw_dirhist_2='/usr/share/sddm/themes'
+let g:netrw_dirhist_1='/usr/share/sddm'

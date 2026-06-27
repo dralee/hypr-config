@@ -6,7 +6,7 @@ if status is-interactive
     # Commands to run in interactive sessions can go here
 end
 
-set -x DOTNET_ROOT $HOME/dotnet
+set -x DOTNET_ROOT $HOME/.dotnet
 set -x DOTNET_TOOL $HOME/.dotnet/tools
 set -x PATH $PATH $DOTNET_ROOT
 set -x PATH $PATH $DOTNET_TOOL

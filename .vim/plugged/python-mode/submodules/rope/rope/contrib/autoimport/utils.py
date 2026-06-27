@@ -1,4 +1,5 @@
 """Utility functions for the autoimport code."""
+
 import pathlib
 import sys
 from collections import OrderedDict
@@ -20,7 +21,7 @@ def get_package_tuple(
     """
     package_name = package_path.name
     package_type: PackageType
-    if package_name.startswith(".") or package_name == "__pycache__":
+    if package_name.startswith(".") or package_name in ["__pycache__", "site-packages"]:
         return None
     if package_name.endswith((".egg-info", ".dist-info")):
         return None
@@ -53,7 +54,7 @@ def get_package_source(
     if "site-packages" in package.parts:
         return Source.SITE_PACKAGE
     if sys.version_info < (3, 10, 0):
-        if str(package).startswith(sys.prefix):
+        if str(package).startswith(sys.base_prefix):
             return Source.STANDARD
     else:
         if name in sys.stdlib_module_names:

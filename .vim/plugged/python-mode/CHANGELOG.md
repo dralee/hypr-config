@@ -1,6 +1,118 @@
 # Changelog
 
-## TODO
+## [Unreleased] 0.15.0
+
+### BREAKING CHANGES: Ruff Migration
+
+This release replaces the old linting infrastructure with Ruff, a modern, fast Python linter and formatter written in Rust.
+
+#### Removed Linting Tools
+
+The following linting tools are **no longer available** as submodules or separate checkers:
+- **pylint** - Replaced by Ruff PLE/PLR/PLW rules
+- **pyflakes** - Replaced by Ruff F rules
+- **pycodestyle** - Replaced by Ruff E/W rules
+- **mccabe** - Replaced by Ruff C90 rules
+- **pydocstyle** - Replaced by Ruff D rules
+- **pylama** - No longer needed (was a wrapper)
+- **autopep8** - Replaced by Ruff format
+
+**Migration:** Your existing `g:pymode_lint_checkers` configuration is automatically mapped to Ruff rules. No immediate action required, but see migration guide below.
+
+#### New Requirements
+
+- **Ruff must be installed:** `pip install ruff`
+- Ruff is now an external dependency (not bundled as a submodule)
+
+#### Configuration Changes
+
+- `g:pymode_lint_checkers` values are now mapped to Ruff rule categories (not actual tools)
+- Old tool-specific options (`g:pymode_lint_options_*`) are mapped to Ruff configuration
+- New Ruff-specific options available:
+  - `g:pymode_ruff_enabled` - Enable/disable Ruff linting
+  - `g:pymode_ruff_format_enabled` - Enable/disable Ruff formatting
+  - `g:pymode_ruff_select` - Select specific Ruff rules
+  - `g:pymode_ruff_ignore` - Ignore specific Ruff rules
+  - `g:pymode_ruff_config_file` - Specify Ruff config file path
+
+#### Behavior Changes
+
+- **Formatting:** `:PymodeLintAuto` now uses Ruff format instead of autopep8 (faster, PEP 8 compliant)
+- **Linting:** Ruff may report different errors than pylint/pyflakes (usually fewer false positives)
+- **Performance:** Significantly faster linting (10-100x improvement expected)
+
+#### Submodule Changes
+
+**Removed submodules:**
+- `submodules/pyflakes`
+- `submodules/pycodestyle`
+- `submodules/mccabe`
+- `submodules/pylint`
+- `submodules/pydocstyle`
+- `submodules/pylama`
+- `submodules/autopep8`
+- `submodules/snowball_py` (was only used by pydocstyle)
+- `submodules/appdirs` (not used in pymode code)
+- `submodules/astroid` (was only needed for pylint)
+- `submodules/toml` (not used; Ruff handles its own TOML parsing)
+
+**Remaining submodules (3 total, down from 13):**
+- `submodules/rope` - Refactoring and code intelligence (essential)
+- `submodules/tomli` - TOML parsing (required by pytoolconfig)
+- `submodules/pytoolconfig` - Tool configuration (required by rope)
+
+**Repository cleanup:**
+- Removed git index entries for all removed submodules
+- Cleaned up `.git/modules` references (freed ~90MB+ of repository space)
+- Physical directories removed from working tree
+
+#### Migration Resources
+
+- **Migration Guide:** See `doc/MIGRATION_GUIDE.md` for step-by-step instructions
+- **Configuration Mapping:** See `doc/RUFF_CONFIGURATION_MAPPING.md` for detailed rule mappings
+- **Migration Script:** Use `scripts/migrate_to_ruff.py` to convert your vimrc configuration
+- **Validation Script:** Use `scripts/validate_ruff_migration.sh` to verify your setup
+
+#### Rollback Instructions
+
+If you need to rollback to the old system:
+1. Checkout previous version: `git checkout v0.14.0`
+2. Install old dependencies: `pip install pylint pyflakes pycodestyle mccabe pydocstyle autopep8`
+3. Restore old configuration in your `.vimrc`
+
+**Note:** The old tools are no longer maintained as submodules. You'll need to install them separately if rolling back.
+
+### Improvements
+
+- **Performance:** Significantly faster linting and formatting with Ruff
+- **Maintenance:** Reduced from 13 submodules to 3, simplifying dependency management
+- **Modern tooling:** Using Ruff, a actively maintained, modern Python linter
+- **Unified configuration:** Single tool configuration instead of multiple tool configs
+- **Better error messages:** Ruff provides clearer, more actionable error messages
+
+### Documentation
+
+- Added comprehensive migration guide (`doc/MIGRATION_GUIDE.md`)
+- Added Ruff configuration mapping documentation (`doc/RUFF_CONFIGURATION_MAPPING.md`)
+- Updated `doc/pymode.txt` with Ruff configuration options
+- Added migration tools (`scripts/migrate_to_ruff.py`, `scripts/validate_ruff_migration.sh`)
+
+### Testing
+
+- Added comprehensive Ruff integration tests (`tests/vader/ruff_integration.vader`)
+- All existing tests continue to pass
+- Verified compatibility with Python 3.10-3.13
+- Verified Docker environment compatibility
+- **Multi-platform CI testing:** Added support for testing on Linux, macOS, and Windows
+  - Windows PowerShell test script (`scripts/cicd/run_vader_tests_windows.ps1`)
+  - Updated GitHub Actions workflow for cross-platform testing
+  - Tests run on all platforms with Python 3.10, 3.11, 3.12, and 3.13
+  - Platform-specific test result aggregation in PR summaries
+  - **Platform-specific fixes:**
+    - macOS: Fixed `mapfile` compatibility (bash 3.x/zsh), empty array handling, sed errors
+    - Windows: Fixed path resolution across drive letters, `/tmp/` path redirection to `$TEMP`
+    - Added robust error handling and timeout support across all platforms
+    - Improved Vim detection and PATH configuration for Windows
 
 ## 2023-07-02 0.14.0
 

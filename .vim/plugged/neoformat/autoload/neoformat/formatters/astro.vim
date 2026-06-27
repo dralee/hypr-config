@@ -1,5 +1,5 @@
 function! neoformat#formatters#astro#enabled() abort
-    return ['prettier']
+    return ['prettier, prettierd']
 endfunction
 
 function! neoformat#formatters#astro#prettier() abort
@@ -8,5 +8,13 @@ function! neoformat#formatters#astro#prettier() abort
         \ 'args': ['--stdin-filepath', '"%:p"'],
         \ 'stdin': 1,
         \ 'try_node_exe': 1,
+        \ }
+endfunction
+
+function! neoformat#formatters#astro#prettierd() abort
+    return {
+        \ 'exe': 'prettierd',
+        \ 'args': ['"%:p"'],
+        \ 'stdin': 1,
         \ }
 endfunction

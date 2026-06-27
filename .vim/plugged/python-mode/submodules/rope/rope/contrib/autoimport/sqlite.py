@@ -1,20 +1,38 @@
 """AutoImport module for rope."""
 
+from __future__ import annotations
+
 import contextlib
+import json
 import re
+import secrets
 import sqlite3
 import sys
+import warnings
 from collections import OrderedDict
 from concurrent.futures import Future, ProcessPoolExecutor, as_completed
+from datetime import datetime
+from hashlib import sha256
 from itertools import chain
 from pathlib import Path
-from typing import Generator, Iterable, Iterator, List, Optional, Set, Tuple
+from threading import local
+from typing import (
+    Generator,
+    Iterable,
+    Iterator,
+    List,
+    Optional,
+    Set,
+    Tuple,
+    TYPE_CHECKING,
+)
 
-from rope.base import exceptions, libutils, resourceobserver, taskhandle
+from rope.base import exceptions, libutils, resourceobserver, taskhandle, versioning
 from rope.base.project import Project
 from rope.base.resources import Resource
 from rope.contrib.autoimport import models
 from rope.contrib.autoimport.defs import (
+    Alias,
     ModuleFile,
     Name,
     NameType,
@@ -34,9 +52,13 @@ from rope.contrib.autoimport.utils import (
 from rope.refactor import importutils
 
 
+if TYPE_CHECKING:
+    from collections.abc import Collection
+
+
 def get_future_names(
     packages: List[Package], underlined: bool, job_set: taskhandle.BaseJobSet
-) -> Generator[Future, None, None]:
+) -> Generator[Future[Collection[Name]], None, None]:
     """Get all names as futures."""
     with ProcessPoolExecutor() as executor:
         for package in packages:
@@ -63,6 +85,9 @@ def filter_packages(
     return filter(filter_package, packages)
 
 
+_deprecated_default: bool = object()  # type: ignore
+
+
 class AutoImport:
     """A class for finding the module that provides a name.
 
@@ -71,12 +96,18 @@ class AutoImport:
 
     """
 
-    connection: sqlite3.Connection
-    underlined: bool
+    memory: bool
     project: Project
     project_package: Package
+    underlined: bool
 
-    def __init__(self, project: Project, observe=True, underlined=False, memory=True):
+    def __init__(
+        self,
+        project: Project,
+        observe: bool = True,
+        underlined: bool = False,
+        memory: bool = _deprecated_default,
+    ):
         """Construct an AutoImport object.
 
         Parameters
@@ -87,21 +118,36 @@ class AutoImport:
             if true, listen for project changes and update the cache.
         underlined : bool
             If `underlined` is `True`, underlined names are cached, too.
-        memory : bool
-            if true, don't persist to disk
+        memory:
+            If true, don't persist to disk
+
+            DEPRECATION NOTICE: The default value will change to use an on-disk
+            database by default in the future. If you want to use an in-memory
+            database, you need to pass `memory=True` explicitly:
+
+                autoimport = AutoImport(..., memory=True)
         """
         self.project = project
-        project_package = get_package_tuple(Path(project.root.real_path), project)
+        project_package = get_package_tuple(project.root.pathlib, project)
         assert project_package is not None
         assert project_package.path is not None
         self.project_package = project_package
         self.underlined = underlined
-        db_path: str
-        if memory or project.ropefolder is None:
-            db_path = ":memory:"
-        else:
-            db_path = str(Path(project.ropefolder.real_path) / "autoimport.db")
-        self.connection = sqlite3.connect(db_path)
+        self.memory = memory
+        if memory is _deprecated_default:
+            self.memory = True
+            warnings.warn(
+                "The default value for `AutoImport(memory)` argument will "
+                "change to use an on-disk database by default in the future. "
+                "If you want to use an in-memory database, you need to pass "
+                "`AutoImport(memory=True)` explicitly.",
+                DeprecationWarning,
+            )
+        self.thread_local = local()
+        self.connection = self.create_database_connection(
+            project=project,
+            memory=memory,
+        )
         self._setup_db()
         if observe:
             observer = resourceobserver.ResourceObserver(
@@ -109,10 +155,69 @@ class AutoImport:
             )
             project.add_observer(observer)
 
+    @classmethod
+    def create_database_connection(
+        cls,
+        *,
+        project: Optional[Project] = None,
+        memory: bool = False,
+    ) -> sqlite3.Connection:
+        """
+        Create an sqlite3 connection
+
+        project : rope.base.project.Project
+            the project to use for project imports
+        memory : bool
+            if true, don't persist to disk
+        """
+
+        def calculate_project_hash(data: str) -> str:
+            return sha256(data.encode()).hexdigest()
+
+        if not memory and project is None:
+            raise Exception("if memory=False, project must be provided")
+        if memory or project is None or project.ropefolder is None:
+            # Allows the in-memory db to be shared across threads
+            # See https://www.sqlite.org/inmemorydb.html
+            project_hash: str
+            if project is None:
+                project_hash = secrets.token_hex()
+            elif project.ropefolder is None:
+                project_hash = calculate_project_hash(project.address)
+            else:
+                project_hash = calculate_project_hash(project.ropefolder.real_path)
+            return sqlite3.connect(
+                f"file:rope-{project_hash}:?mode=memory&cache=shared", uri=True
+            )
+        else:
+            return sqlite3.connect(project.ropefolder.pathlib / "autoimport.db")
+
+    @property
+    def connection(self) -> sqlite3.Connection:
+        """
+        Creates a new connection if called from a new thread.
+
+        This makes sure AutoImport can be shared across threads.
+        """
+        if not hasattr(self.thread_local, "connection"):
+            self.thread_local.connection = self.create_database_connection(
+                project=self.project,
+                memory=self.memory,
+            )
+        return self.thread_local.connection
+
+    @connection.setter
+    def connection(self, value: sqlite3.Connection):
+        self.thread_local.connection = value
+
     def _setup_db(self):
-        models.Name.create_table(self.connection)
-        models.Package.create_table(self.connection)
-        self.connection.commit()
+        models.Metadata.create_table(self.connection)
+        version_hash = list(
+            self._execute(models.Metadata.objects.select("version_hash"))
+        )
+        current_version_hash = versioning.calculate_version_hash(self.project)
+        if not version_hash or version_hash[0][0] != current_version_hash:
+            self.clear_cache()
 
     def import_assist(self, starting: str):
         """
@@ -240,11 +345,18 @@ class AutoImport:
             yield SearchResult(
                 f"import {module}", module, source, NameType.Module.value
             )
+        for alias, module, source in self._execute(
+            models.Alias.search_modules_with_alias.select("alias", "module", "source"),
+            (name,),
+        ):
+            yield SearchResult(
+                f"import {module} as {alias}", alias, source, NameType.Module.value
+            )
 
     def get_modules(self, name) -> List[str]:
         """Get the list of modules that have global `name`."""
         results = self._execute(
-            models.Name.search_by_name_like.select("module", "source"), (name,)
+            models.Name.search_by_name.select("module", "source"), (name,)
         ).fetchall()
         return sort_and_deduplicate(results)
 
@@ -379,10 +491,29 @@ class AutoImport:
         regenerating global names.
 
         """
-        self._execute(models.Name.objects.drop_table())
-        self._execute(models.Package.objects.drop_table())
-        self._setup_db()
-        self.connection.commit()
+        with self.connection:
+            self._execute(models.Name.objects.drop_table())
+            self._execute(models.Alias.objects.drop_table())
+            self._execute(models.Package.objects.drop_table())
+            self._execute(models.Metadata.objects.drop_table())
+            models.Name.create_table(self.connection)
+            models.Alias.create_table(self.connection)
+            models.Package.create_table(self.connection)
+            models.Metadata.create_table(self.connection)
+            self.add_aliases(self.project.prefs.autoimport.aliases)
+            data = (
+                versioning.calculate_version_hash(self.project),
+                json.dumps(versioning.get_version_hash_data(self.project)),
+                datetime.utcnow().isoformat(),
+            )
+            assert models.Metadata.columns == [
+                "version_hash",
+                "hash_data",
+                "created_at",
+            ]
+            self._execute(models.Metadata.objects.insert_into(), data)
+
+            self.connection.commit()
 
     def find_insertion_line(self, code):
         """Guess at what line the new import should be inserted."""
@@ -434,9 +565,18 @@ class AutoImport:
             return folder.is_dir() and folder.as_posix() != "/usr/bin"
 
         folders = self.project.get_python_path_folders()
-        folder_paths = map(lambda folder: Path(folder.real_path), folders)
-        folder_paths = filter(filter_folders, folder_paths)  # type:ignore
+        folder_paths = filter(filter_folders, map(Path, folders))
         return list(OrderedDict.fromkeys(folder_paths))
+
+    def _safe_iterdir(self, folder: Path):
+        dirs = folder.iterdir()
+        while True:
+            try:
+                yield next(dirs)
+            except PermissionError:
+                pass
+            except StopIteration:
+                break
 
     def _get_available_packages(self) -> List[Package]:
         packages: List[Package] = [
@@ -444,7 +584,7 @@ class AutoImport:
             for module in sys.builtin_module_names
         ]
         for folder in self._get_python_folders():
-            for package in folder.iterdir():
+            for package in self._safe_iterdir(folder):
                 package_tuple = get_package_tuple(package, self.project)
                 if package_tuple is None:
                     continue
@@ -467,9 +607,6 @@ class AutoImport:
             modname = self._resource_to_module(resource).modname
             self._del_if_exist(modname)
 
-    def _add_future_names(self, names: Future):
-        self._add_names(names.result())
-
     @staticmethod
     def _convert_name(name: Name) -> tuple:
         return (
@@ -480,8 +617,12 @@ class AutoImport:
             name.name_type.value,
         )
 
-    def _add_names(self, names: Iterable[Name]):
-        if names is not None:
+    def add_aliases(self, aliases: Collection[Alias]):
+        if aliases:
+            self._executemany(models.Alias.objects.insert_into(), aliases)
+
+    def _add_names(self, names: Collection[Name]):
+        if names:
             self._executemany(
                 models.Name.objects.insert_into(),
                 [self._convert_name(name) for name in names],
@@ -494,7 +635,7 @@ class AutoImport:
         if target_name in sys.builtin_module_names:
             return Package(target_name, Source.BUILTIN, None, PackageType.BUILTIN)
         for folder in self._get_python_folders():
-            for package in folder.iterdir():
+            for package in self._safe_iterdir(folder):
                 package_tuple = get_package_tuple(package, self.project)
                 if package_tuple is None:
                     continue
@@ -509,7 +650,7 @@ class AutoImport:
     ) -> ModuleFile:
         assert self.project_package.path
         underlined = underlined if underlined else self.underlined
-        resource_path: Path = Path(resource.real_path)
+        resource_path: Path = resource.pathlib
         # The project doesn't need its name added to the path,
         # since the standard python file layout accounts for that
         # so we set add_package_name to False
