@@ -11,6 +11,7 @@ comment=$1
 config_dir=.config
 local_dir=.local
 mozilla_dir=.mozilla
+dralee_tool_dir=dralee
 local_share_dir=$local_dir/share
 hyprland_dir=$config_dir/hypr
 hyprland_dir_scripts=$hyprland_dir/scripts
@@ -104,6 +105,7 @@ cp -r $HOME/$yazi_dir/. $yazi_dir
 cp -r $HOME/$firefox_default_chrome/. $firefox_default_chrome
 cp -r $HOME/$zsh_dir/. $zsh_dir
 cp -r $usr_zsh/. usr/zsh 
+cp -r $HOME/.config/$dralee_tool_dir $dralee_tool_dir
 
 # clear not need
 rm -rf $hyprland_dir/card*

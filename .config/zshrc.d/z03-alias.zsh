@@ -56,7 +56,7 @@ if [[ "$HYPR_RUN_PC_ENV" = "work" ]];then
 	alias pp='$HOME/Application/shells/pull-project.sh'
 	alias rider-upgrade='$HOME/Application/shells/upgrade-rider-jbr.sh $HOME/Application/shells/'
 	#alias run-z9='$HOME/f/workspace/temp/back/run-z9.sh -o $HOME/f/workspace/temp/back/'
-]]
+fi
 
 alias del='mv -t ~/.local/share/Trash/files/ --backup'
 alias request-for='$HOME/Application/shells/request/request-for-url.sh'
