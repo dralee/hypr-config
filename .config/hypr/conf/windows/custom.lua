@@ -398,11 +398,11 @@ hl.window_rule({
 hl.window_rule({
 	name = "virt-manager",
     float = true,
-	match = { initial_class = "(virt-manager)" }	
+	match = { initial_class = "(virt-manager)" }
 })
 
 hl.window_rule({
-    name = "flameshot-multi-display-fix",    
+    name = "flameshot-multi-display-fix",
     animation = "fade",
     rounding = 0,
     border_size = 0,

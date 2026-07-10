@@ -122,6 +122,7 @@ button:hover {
 #custom-power,
 #custom-weather,
 #custom-weather2,
+#custom-weather3,
 #custom-khal,
 #tray {
 /*    padding-left: 10px;
@@ -319,4 +320,35 @@ button:hover {
     color: #dbd9d8;
 }
 
-/* end custom/weather2 */
+/* end custom/weather3 */
+
+/* custom/weather3 */
+#custom-weather3.severe {
+    color: #eb937d;
+}
+
+#custom-weather3.sunnyDay {
+    color: #c2ca76;
+}
+
+#custom-weather3.clearNight {
+    color: #2b2b2a;
+}
+
+#custom-weather3.cloudyFoggyDay, #custom-weather3.cloudyFoggyNight {
+    color: #c2ddda;
+}
+
+#custom-weather3.rainyDay, #custom-weather3.rainyNight {
+    color: #5aaca5;
+}
+
+#custom-weather3.showyIcyDay, #custom-weather3.snowyIcyNight {
+    color: #d6e7e5;
+}
+
+#custom-weather3.default {
+    color: #dbd9d8;
+}
+
+/* end custom/weather3 */
