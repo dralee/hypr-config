@@ -76,7 +76,8 @@ mkdir -p $vim_dir
 mkdir -p $firefox_default_chrome
 mkdir -p $yazi_dir
 mkdir -p $zsh_dir
-mkdir -p usr/zsh
+mkdir -p usr/zsh    
+mkdir -p $dralee_tool_dir
 
 # cp dir
 #echo cp $HOME/$hyprland_dir_scripts $hyprland_dir_scripts
@@ -105,7 +106,7 @@ cp -r $HOME/$yazi_dir/. $yazi_dir
 cp -r $HOME/$firefox_default_chrome/. $firefox_default_chrome
 cp -r $HOME/$zsh_dir/. $zsh_dir
 cp -r $usr_zsh/. usr/zsh 
-cp -r $HOME/$dralee_tool_dir $dralee_tool_dir
+cp -r $HOME/$dralee_tool_dir/. $dralee_tool_dir
 
 # clear not need
 rm -rf $hyprland_dir/card*
