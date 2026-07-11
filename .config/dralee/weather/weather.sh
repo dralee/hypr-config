@@ -1,6 +1,6 @@
 #!/bin/bash
 # weather api call for waybar and others
-# 2026.7.9~10 by dralee
+# 2026.7.9~11 by dralee
 
 declare -A ICONS
 # daily
@@ -82,20 +82,40 @@ KEY_LOGO_ICONS[$W_TEMPRETURE]="temp" # get the icon ICONS
 KEY_LOGO_ICONS[$W_TEMPRETURE_MIN]="" # nf-md-thermometer_minus
 KEY_LOGO_ICONS[$W_TEMPRETURE_MAX]="" # nf-md-thermometer_plus
 KEY_LOGO_ICONS[$W_FEELS_LIKE]="" # nf-md-thermometer_minus
-KEY_LOGO_ICONS[$W_PRESURE]="\udb86\udd0a" # get the icon ICONS
+KEY_LOGO_ICONS[$W_PRESURE]="󱤊" # nf-md-car_brake_low_pressure
 KEY_LOGO_ICONS[$W_HUMIDITY]="" # nf-md-water_percent
 KEY_LOGO_ICONS[$W_SEA_LEVEL]="" # nf-md-water
 KEY_LOGO_ICONS[$W_GRND_LEVEL]="" # nf-md-water
 KEY_LOGO_ICONS[$W_VISIBILITY]="" # nf-md-visibility
-KEY_LOGO_ICONS[$W_WIND_SPEED]="\ue27e" # get the icon ICONS
+KEY_LOGO_ICONS[$W_WIND_SPEED]="" # nf-fa-wind
 KEY_LOGO_ICONS[$W_WIND_DEG]="" # nf-md-weather_windy
 KEY_LOGO_ICONS[$W_WIND_GUST]="" # nf-md-weather_windy
 KEY_LOGO_ICONS[$W_CLOUDS]="" # nf-md-weather_cloudy
 
+# wind direction 22.5*16
+declare -a KEY_WIND_DIRS
+KEY_WIND_DIRS[0]="北"
+KEY_WIND_DIRS[1]="东北偏北" # 北东北
+KEY_WIND_DIRS[2]="东北"
+KEY_WIND_DIRS[3]="东北偏东"  # 东东北
+KEY_WIND_DIRS[4]="东"
+KEY_WIND_DIRS[5]="东南偏东"   # 东东南
+KEY_WIND_DIRS[6]="东南"
+KEY_WIND_DIRS[7]="东南偏南" # 南东南
+KEY_WIND_DIRS[8]="南"
+KEY_WIND_DIRS[9]="西南偏南"  # 南西南
+KEY_WIND_DIRS[10]="西南"
+KEY_WIND_DIRS[11]="西南偏西" # 西西南
+KEY_WIND_DIRS[12]="西"
+KEY_WIND_DIRS[13]="西北偏西" # 西西北
+KEY_WIND_DIRS[14]="西北"
+KEY_WIND_DIRS[15]="西北偏北"  # 北西北
+
 # global constants
 EXPIRE_SECONDS=1800 # 30minutes
 TIMESTAMP_NAME="timestamp"
-DATA_FILE="data.json"
+PATH_ROOT=$(dirname $0)
+DATA_FILE=$PATH_ROOT/"data.json"
 
 # load the open weathermap data for file and return
 # read key for env $OPEN_WEATHER_KEY
@@ -116,12 +136,12 @@ function load_weather_data(){
 
 # normal log
 function log(){
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" >> weather.log
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" >> $PATH_ROOT/weather.log
 }
 
 # error log
 function error(){
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" >> error.log
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" >> $PATH_ROOT/error.log
 }
 
 # check if need to update the weather data
@@ -189,6 +209,15 @@ function waybar_style_class(){
     echo "$RES"
 }
 
+# get the wind direction
+function wind_direction(){
+    WIND_DEG=$1
+    #echo $WIND_DEG
+    N=$(printf "%.0f" $(echo "scale=2; $WIND_DEG/22.5" | bc))  # use bc for math
+    #echo $N
+    echo ${KEY_WIND_DIRS[$N]}
+}
+
 function test(){
     #TIMESTAMP=$(timestamp)
     #sed -i 's/}$/,'\"$TIMESTAMP_NAME\":$TIMESTAMP'}/' $DATA_FILE
@@ -219,12 +248,15 @@ function waybar_data(){
     #echo ${KEY_LOGO_ICONS[$W_TEMPRETURE_MIN]}, "${KEY_LOGO_ICONS[@]}"
     #echo "$P_ICON, $P_TEMPRETURE, $P_TEMPRETURE_MIN $P_TEMPRETURE_MAX $P_FEELS_LIKE $P_PRESURE $P_HUMIDITY $P_SEA_LEVEL $P_GRND_LEVEL $P_VISIBILITY $P_WIND_SPEED $P_WIND_DEG $P_WIND_GUST $P_CLOUDS $P_LOCATION"
     ICON=${ICONS[$P_ICON]}
+
+    WIND_DIR=$(wind_direction $P_WIND_DEG)
+
     LINE1="<span size=\\\"xx-large\\\">${P_LOCATION}</span>"
     LINE2="<span size=\\\"xx-large\\\">${ICON}\t ${P_TEMPRETURE}${KEY_UNITS[$W_TEMPRETURE]}</span>"
     LINE3="${KEY_LOGO_ICONS[$W_TEMPRETURE_MIN]} <big>${P_TEMPRETURE_MIN}${KEY_UNITS[$W_TEMPRETURE_MIN]}</big>\t\t${KEY_LOGO_ICONS[$W_TEMPRETURE_MAX]} <big>${P_TEMPRETURE_MAX}${KEY_UNITS[$W_TEMPRETURE_MAX]}</big>"
     LINE4="Feels like <big>${P_FEELS_LIKE}${KEY_UNITS[$W_FEELS_LIKE]}</big>"
     LINE5="${KEY_LOGO_ICONS[$W_CLOUDS]} <big>${P_CLOUDS}${KEY_UNITS[$W_CLOUDS]}</big>"
-    LINE6="${KEY_LOGO_ICONS[$W_WIND_SPEED]} ${P_WIND_SPEED}${KEY_UNITS[$W_WIND_SPEED]}\t${KEY_LOGO_ICONS[$W_WIND_DEG]} ${P_WIND_DEG}${KEY_UNITS[$W_WIND_DEG]}\t${KEY_LOGO_ICONS[$W_WIND_GUST]} ${P_WIND_GUST}${KEY_UNITS[$W_WIND_GUST]}\t ${KEY_LOGO_ICONS[$W_HUMIDITY]} ${P_HUMIDITY}${KEY_UNITS[$W_HUMIDITY]}"
+    LINE6="${KEY_LOGO_ICONS[$W_WIND_SPEED]} ${P_WIND_SPEED}${KEY_UNITS[$W_WIND_SPEED]}\t${KEY_LOGO_ICONS[$W_WIND_DEG]} ${WIND_DIR}\t${KEY_LOGO_ICONS[$W_WIND_GUST]} ${P_WIND_GUST}${KEY_UNITS[$W_WIND_GUST]}\t ${KEY_LOGO_ICONS[$W_HUMIDITY]} ${P_HUMIDITY}${KEY_UNITS[$W_HUMIDITY]}"
     LINE7="${KEY_LOGO_ICONS[$W_VISIBILITY]} ${P_VISIBILITY}${KEY_UNITS[$W_VISIBILITY]}"
     LINE8="${KEY_LOGO_ICONS[$W_PRESURE]} ${P_PRESURE}${KEY_UNITS[$W_PRESURE]} \t${KEY_LOGO_ICONS[$W_SEA_LEVEL]} ${P_SEA_LEVEL}${KEY_UNITS[$W_SEA_LEVEL]} \t${KEY_LOGO_ICONS[$W_GRND_LEVEL]} ${P_GRND_LEVEL}${KEY_UNITS[$W_GRND_LEVEL]}"
 
@@ -247,11 +279,11 @@ function get_item(){
     check_weather_data
 
     RESULT=''
-    for name in $(sed 's/,/ /g' <<< $names); do
-        #echo "name: $name"
+    for name in $(sed 's/,/ /g' <<< $names); do        
         KEY=${KEY_PROPS[$name]}
         UNIT=${KEY_UNITS[$name]}
         icon=${KEY_LOGO_ICONS[$name]}
+        #echo "name: $name, key: $KEY, unit: $UNIT, icon: $icon"
         if [ "$name" == "temp" ]; then
             K=${KEY_PROPS["icon"]}
             i=$(cat $DATA_FILE | jq -r $K)
@@ -259,9 +291,13 @@ function get_item(){
             #echo "$icon $name $i"
         fi
 
-        VAL=$(cat $DATA_FILE | jq -r $KEY)        
+        VAL=$(cat $DATA_FILE | jq -r $KEY)
+        #echo "name: $KEY, val: $VAL"
+        if [ "$name" == "$W_WIND_DEG" ]; then
+            VAL=$(wind_direction $VAL)
+        fi
         if [ ! -z "$RESULT" ]; then
-            RESULT="$RESULT "
+            RESULT="$RESULT    "
         fi
         RESULT="${RESULT}${icon} ${VAL}${UNIT}"
     done
@@ -310,4 +346,5 @@ function menu(){
 #check_weather_data
 #test
 #menu
+#wind_direction $@
 get_args "$*"

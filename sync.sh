@@ -143,6 +143,7 @@ rm -rf $vim_dir/plugged/
 #rm -rf $vim_dir/plugged/vim-markdown/.github
 #rm -rf $vim_dir/plugged/vim-translator/.git
 #rm -rf $vim_dir/plugged/vim-translator/.github
+rm $dralee_tool_dir/weather.log $dralee_tool_dir/error.log
 
 # cp file
 #cp $HOME/$hyprland_config $hyprland_config_work
@@ -166,6 +167,7 @@ if [ -z "$comment" ];then
 	echo not set the comment, just syn.
 	git status
 else
+	git pull
 	echo just commit by \"$comment\" after sync.
 	git add .
 	git status
