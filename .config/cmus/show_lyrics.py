@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-cmus 歌词显示脚本
+cmus 歌词显示脚本 - 支持自动检测歌词文件更新
 保存到 ~/.config/cmus/show_lyrics.py
 """
 
@@ -9,6 +9,11 @@ import os
 import sys
 import time
 from pathlib import Path
+
+# 全局变量存储文件监控信息
+last_file = None
+last_lyrics = []
+last_lrc_mtime = 0
 
 def get_cmus_status():
     """获取 cmus 当前播放状态"""
@@ -88,13 +93,44 @@ def parse_lrc(lrc_file):
     except Exception as e:
         return []
 
-def display_lyrics(lyrics, position):
+def check_lyrics_updated(lrc_file):
+    """检查歌词文件是否已更新"""
+    global last_lrc_mtime
+
+    if not lrc_file or not lrc_file.exists():
+        return False
+
+    try:
+        current_mtime = lrc_file.stat().st_mtime
+        if current_mtime > last_lrc_mtime:
+            last_lrc_mtime = current_mtime
+            return True
+    except:
+        pass
+
+    return False
+
+def display_lyrics(lyrics, position, status_info):
     """显示当前歌词"""
     os.system('clear')
 
+    # 显示歌曲信息头部
+    artist = status_info.get('artist', 'Unknown Artist')
+    title = status_info.get('title', 'Unknown Title')
+    album = status_info.get('album', '')
+
+    print("\n" + "="*70)
+    print(f"  🎵 {artist} - {title}")
+    if album:
+        print(f"  💿 {album}")
+    print("="*70 + "\n")
+
     if not lyrics:
-        print("\n\n \033[31m 🎵 未找到歌词文件\033[0m\n") # red
-        print("  请将 .lrc 文件放在音乐文件同目录下")
+        print("  📝 未找到歌词文件")
+        print("  💡 提示：按 'd' 键自动下载歌词\n")
+        print("  歌词文件应命名为：")
+        print(f"     {Path(status_info.get('file', '')).stem}.lrc")
+        print(f"  或保存在音乐文件同目录下\n")
         return
 
     # 找到当前歌词位置
@@ -105,63 +141,112 @@ def display_lyrics(lyrics, position):
         else:
             break
 
-    # 显示上下文歌词
-    print("\n" + "="*60)
-    print("  \033[34m🎵\033[0m \033[34m歌词显示\033[0m") # blue
-    print("="*60 + "\n")
-
+    # 显示上下文歌词 (当前行前3行，后4行)
     start = max(0, current_idx - 3)
     end = min(len(lyrics), current_idx + 5)
 
     for i in range(start, end):
         timestamp, text = lyrics[i]
-        if i == current_idx:
-            print(f"  \033[31m►\033[0m \033[36m{text}\033[0m") # cyan
-        else:
-            print(f"    {text}")
 
-    print("\n" + "="*60)
+        # 格式化时间
+        mins = int(timestamp // 60)
+        secs = int(timestamp % 60)
+        time_str = f"[{mins:02d}:{secs:02d}]"
+
+        if i == current_idx:
+            # 当前播放行 - 高亮显示
+            print(f" \033[33m ►\033[0m {time_str} \033[1;36m{text}\033[0m")
+        elif i == current_idx + 1:
+            # 下一行 - 次要高亮
+            print(f"    {time_str} \033[0;37m{text}\033[0m")
+        else:
+            # 其他行 - 暗色
+            print(f"    {time_str} \033[0;90m{text}\033[0m")
+
+    # 显示进度条
+    duration = status_info.get('duration', 0)
+    if duration > 0:
+        progress = position / duration
+        bar_length = 60
+        filled = int(bar_length * progress)
+        bar = "█" * filled + "░" * (bar_length - filled)
+
+        pos_min = int(position // 60)
+        pos_sec = int(position % 60)
+        dur_min = int(duration // 60)
+        dur_sec = int(duration % 60)
+
+        print(f"\n  {bar}")
+        print(f"  {pos_min:02d}:{pos_sec:02d} / {dur_min:02d}:{dur_sec:02d}")
+
+    print("\n" + "="*70)
+    print("  💡 按 'd' 下载歌词 | 按 'q' 退出歌词显示")
+    print("="*70)
 
 def main():
     """主循环"""
-    last_file = None
-    lyrics = []
+    global last_file, last_lyrics, last_lrc_mtime
+
+    print("\n\n  正在启动歌词显示...\n  等待 cmus 播放音乐...\n")
+    time.sleep(1)
 
     while True:
         status = get_cmus_status()
 
         if not status:
-            print("\r \033[31m ⏸  cmus 未运行或未播放\033[0m", end='',flush=True) # red
+            os.system('clear')
+            print("\r  ⏸  cmus 未运行或未播放",end='',flush=True)
+            print("\n\r  请先启动 cmus 并播放音乐",end='',flush=True)
             time.sleep(2)
+            last_file = None
+            last_lyrics = []
+            last_lrc_mtime = 0
             continue
 
         if status.get('status') != 'playing':
-            print("\r ⏸  已暂停",end='',flush=True)
+            os.system('clear')
+            print("\r  ⏸  已暂停", end='',flush=True)
             time.sleep(1)
             continue
 
-        # 如果歌曲改变，重新加载歌词
+        # 获取当前歌曲信息
         current_file = status.get('file')
-        if current_file != last_file:
-            last_file = current_file
-            artist = status.get('artist', 'Unknown')
-            title = status.get('title', 'Unknown')
+        artist = status.get('artist', 'Unknown')
+        title = status.get('title', 'Unknown')
 
-            lrc_file = find_lyrics(current_file, artist, title)
-            if lrc_file:
-                lyrics = parse_lrc(lrc_file)
+        # 如果歌曲改变或歌词文件更新，重新加载歌词
+        lrc_file = find_lyrics(current_file, artist, title)
+
+        if current_file != last_file:
+            # 歌曲改变
+            last_file = current_file
+            last_lrc_mtime = 0
+
+            if lrc_file and lrc_file.exists():
+                last_lyrics = parse_lrc(lrc_file)
+                last_lrc_mtime = lrc_file.stat().st_mtime
             else:
-                lyrics = []
+                last_lyrics = []
+
+        elif lrc_file and check_lyrics_updated(lrc_file):
+            # 歌词文件被更新（例如刚下载完成）
+            last_lyrics = parse_lrc(lrc_file)
+            # 显示提示
+            os.system('clear')
+            print("\n\n  ✓ 歌词已更新！\n")
+            time.sleep(1)
 
         # 显示歌词
         position = status.get('position', 0)
-        display_lyrics(lyrics, position)
+        display_lyrics(last_lyrics, position, status)
 
-        time.sleep(0.5)
+        # 刷新频率
+        time.sleep(0.3)
 
 if __name__ == '__main__':
     try:
         main()
     except KeyboardInterrupt:
-        print("\n退出歌词显示")
+        os.system('clear')
+        print("\n  退出歌词显示\n")
         sys.exit(0)

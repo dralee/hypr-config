@@ -1,6 +1,66 @@
+wq
+help
+set mixer.alsa.channel=
+set mixer.alsa.channel=50
+set softvol=false
+s
+set softvol=true
+balance
+blance 50
+mixer 50
+save
+add /home/dralee/d/data/music/童丽《梦中花》/童丽 梦中花.wav
+add "/home/dralee/d/data/music/童丽《梦中花》"
+add /home/dralee/d/data/music/童丽《梦中花》/
+add /home/dralee/d/data/music/童丽《梦中花》
+pl-create 童丽
+add /home/dralee/d/data/music/潮剧/经典潮语歌曲第四集
+add /home/dralee/d/data/music/潮剧/经典潮语歌曲第三集
+add /home/dralee/d/data/music/潮剧/经典潮语歌曲第二集
+add /home/dralee/d/data/music/潮剧/经典潮语歌曲第一集
+add /home/dralee/d/data/music/潮剧/潮韵潮乐
+pl-create 潮乐
+add /home/dralee/d/data/music/李小珍/李小珍3
+add /home/dralee/d/data/music/李小珍/李小珍2
+add /home/dralee/d/data/music/李小珍/李小珍1
+pl-create xx
+add 李小珍1/后悔爱上伊 - 李小珍.rm
+load ~/.config/cmus/playlists/李小珍1
+load 
+load  
+pl-create 李小珍3
+pl-create 李小珍2
+pl-create 李小珍1
+add /home/dralee/d/data/music/水晶球
+add /home/dralee/d/data/music/青云志
+add /home/dralee/d/data/music/朗诵—笑着流泪，因为爱你.mp3
+add /home/dralee/d/data/music/朗诵
+pl-create 朗诵
+add /home/dralee/d/data/music/TTP
+pl-create ttp
+add /home/dralee/d/data/music/tmp
+pl-create tmp
+add /home/dralee/d/data/music/Songs
+pl-create songs
+add /home/dralee/d/data/music/sm
+pl-create sm
+add /home/dralee/d/data/music/QQM
+pl-create qqm
+add /home/dralee/d/data/music/fx
+save 
+add /home/dralee/d/data/music/NewFeel
+pl-create newfeel
+add /home/dralee/d/data/music/NewF
+load /home/dralee/d/data/music/NewF
+load ~/d/music/NewF
+load d/music/NewF
+pl-create newf
+add ~/Music/
+pl-create latest
+load music-latest.pl
+save music-latest.pls
 set continue=true
-add $HOME/f/KwDownload/song
-set libpath=$HOME/Music
+add /home/dralee/f/KwDownload/song
+set libpath=/home/dralee/Music
 set libpath=~/Music
 add ~/Music
-help
