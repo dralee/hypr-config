@@ -124,6 +124,7 @@ button:hover {
 #custom-weather2,
 #custom-weather3,
 #custom-khal,
+#custom-disk_speed,
 #tray {
 /*    padding-left: 10px;
     padding-right: 2px;
@@ -349,6 +350,10 @@ button:hover {
 
 #custom-weather3.default {
     color: #dbd9d8;
+}
+
+#custom-disk_speed.default{
+    color: #dedba9;
 }
 
 /* end custom/weather3 */

@@ -19,12 +19,13 @@
     "height": 30,
 
     "modules-left": [
-	"custom/khal",
-	"clock",
+		"custom/khal",
+		"clock",
         "hyprland/workspaces",
         "hyprland/mode",
         "memory",
         "cpu",
+		"custom/disk_speed",
         "network"
     ],
     "modules-center": [
@@ -297,6 +298,12 @@
         "on-click": "python ~/.config/waybar/scripts/khal.py -c && pkill -SIGRTMIN+12 waybar",
         "return-type": "json"
     },
+	"custom/disk_speed": {
+		"exec": "~/.config/waybar/scripts/disk_speed.sh",
+		"format": "{}",
+		"interval": 1,
+	    "return-type": "json"
+	},
 
     "bluetooth": {
 	"format": " {status}",

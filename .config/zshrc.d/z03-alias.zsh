@@ -9,6 +9,7 @@ alias y='yazi'
 
 alias gs='git status'
 alias ga='git add'
+alias gb='git branch'
 alias gc='git checkout'
 alias gm='git commit'
 alias gtl='git stash list'
@@ -59,6 +60,8 @@ if [[ "$HYPR_RUN_PC_ENV" = "work" ]];then
 	alias pp='$HOME/Application/shells/pull-project.sh'
 	alias rider-upgrade='$HOME/Application/shells/upgrade-rider-jbr.sh $HOME/Application/shells/'
 	#alias run-z9='$HOME/f/workspace/temp/back/run-z9.sh -o $HOME/f/workspace/temp/back/'
+	alias progen='cd $HOME/f/workspace/github/freesql-ddd-generator/configurator/configurator && dotnet run --urls="http://*:7201" && cd -'
+	alias fdmodelgen='cd $HOME/f/workspace/github/FDSimpleModelGenerator/FDSimpleModelGenerator && dotnet run --urls="http://*:7201" && cd -'
 fi
 
 alias del='mv -t ~/.local/share/Trash/files/ --backup'
