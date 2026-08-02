@@ -11,6 +11,10 @@ import sys
 from pathlib import Path
 import subprocess
 
+from common import MusicLrc
+
+music_lrc = MusicLrc()
+
 def get_cmus_current():
     """获取 cmus 当前播放信息"""
     try:
@@ -163,7 +167,7 @@ def main():
 
     # 保存歌词
     if lyrics:
-        if save_lyrics(lyrics, music_file):
+        if music_lrc.save_lyrics(lyrics, music_file):  #save_lyrics(lyrics, music_file):
             print("✓ 歌词下载成功！")
             sys.exit(0)
         else:

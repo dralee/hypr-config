@@ -10,10 +10,14 @@ import sys
 import time
 from pathlib import Path
 
+from common import MusicLrc
+
 # 全局变量存储文件监控信息
 last_file = None
 last_lyrics = []
 last_lrc_mtime = 0
+
+music_lrc = MusicLrc()
 
 def get_cmus_status():
     """获取 cmus 当前播放状态"""
@@ -55,10 +59,15 @@ def find_lyrics(music_file, artist, title):
 
     # 可能的歌词文件位置
     lrc_files = [
+        music_lrc.lrc_root / f"{base_name}.lrc",
         music_dir / f"{base_name}.lrc",
         music_dir / f"{artist} - {title}.lrc",
         Path.home() / ".lyrics" / f"{artist} - {title}.lrc",
     ]
+
+    lrc_file = music_lrc.same_lrc(music_file)
+    if lrc_file:
+        lrc_files.append(lrc_file)
 
     for lrc_file in lrc_files:
         if lrc_file.exists():
