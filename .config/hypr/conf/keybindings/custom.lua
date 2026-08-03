@@ -40,7 +40,10 @@ hl.bind(mainMod .. " + CTRL + C", hl.dsp.exec_cmd("centerwindow"))
 -- hl.bind("CTRL + ALT + A", hl.dsp.exec_cmd("hyprshot-gui"))
 hl.bind("CTRL + ALT + A", hl.dsp.exec_cmd("XDG_CURRENT_DESKTOP=sway QT_QPA_PLATFORM=wayland flameshot gui"))
 hl.bind("CTRL + ALT + Q", hl.dsp.exec_cmd("hyprshot -m region -s --clipboard-only"))                        -- 只保存到剪切板
-hl.bind("CTRL + ALT + E", hl.dsp.exec_cmd("hyprshot -m region -r - | swappy -f"))                           -- 编辑截图
+--hl.bind("CTRL + ALT + E", hl.dsp.exec_cmd("hyprshot -m region -r - | swappy -f"))                           -- 编辑截图
+hl.bind("CTRL + ALT + E", hl.dsp.exec_cmd("grim -g \"$(slurp)\" - | swappy -f -"))                           -- 编辑截图
+-- 微信截图
+hl.bind("ALT + A", hl.dsp.pass({window = "class:^(wechat)$"}))
 
 -- record
 hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("notify-send \"start record\" \"recording to $HOME/Videos/record-xxxx.mp4\" && wf-recorder -g \"$(slurp)\" -f \"$HOME/Videos/record-`date +'%Y%m%d%H%M%S'`.mp4\""))
