@@ -34,6 +34,13 @@ hl.window_rule({
     }
 })
 hl.window_rule({
+	name = "zed opacity rule",
+	opacity = "0.9 0.95 0.9",
+	match = {
+		initial_class = "dev.zed.Zed"
+	}
+})
+hl.window_rule({
     name = "jetbrains opacity rule",
     opacity = "0.8 0.85 0.8",
     match = { initial_class = "(jetbrains-rider|jetbrains-goland|jetbrains-rustrover|jetbrains-studio|jetbrains-gateway)"}
@@ -324,6 +331,15 @@ hl.window_rule({
     }
 })
 hl.window_rule({
+    name = "rider Merge",
+    float = true,
+	fullscreen = true,
+    match = {
+        initial_class = "jetbrains-rider",
+        title = "Merge Revisions for.*"
+    }
+})
+hl.window_rule({
     name = "gateway Commit",
     float = true,
     match = {
@@ -337,6 +353,14 @@ hl.window_rule({
     match = {
         initial_class = "(baidunetdisk|org.gnome.Evince)"
     }
+})
+hl.window_rule({
+	name = "zed opacity rule",
+    float = true,
+	match = {
+		initial_class = "dev.zed.Zed",
+		initial_title = "Zed — Settings"
+	}
 })
 
 

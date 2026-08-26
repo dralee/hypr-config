@@ -39,7 +39,6 @@ set -x PATH $PATH /usr/local/mysql/bin
 # use eza for ls, bat for cat
 alias ls 'eza'
 alias ll 'eza -lah'
-alias cat 'bat'
 alias z 'zsh'
 
 source ~/Application/shells/fish/tod.sh

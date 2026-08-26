@@ -1,6 +1,7 @@
 """
 每日一话
 2025.7.4 by dralee
+2026.8.25 by dralee fix sync
 """
 from os.path import getatime,exists,expanduser
 import time
@@ -19,6 +20,10 @@ class GeekWord:
             return
         with open(file_name, "r", encoding='utf8') as f:
             return f.read().strip()
+
+    def __exists(self, file_name):
+        file_name = "{}/{}".format(self.root, file_name)
+        return exists(file_name)
     
     def __save_file(self, file_name, content):
         file_name = "{}/{}".format(self.root, file_name)
@@ -33,7 +38,7 @@ class GeekWord:
         tstr = self.__read_file(self.sync)
         lasttime = int('0' if tstr is None or tstr == '' else tstr)
         now = int(time.time())
-        if exists(self.text_file):
+        if self.__exists(self.text_file):
             #atime = int(getatime(self.text_file))            
             if now - lasttime < self.cache_time:
                 #print("resuse the old word")
