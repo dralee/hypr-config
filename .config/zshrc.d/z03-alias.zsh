@@ -65,6 +65,7 @@ if [[ "$HYPR_RUN_PC_ENV" = "work" ]];then
 	#alias run-z9='$HOME/f/workspace/temp/back/run-z9.sh -o $HOME/f/workspace/temp/back/'
 	alias progen='cd $HOME/f/workspace/github/freesql-ddd-generator/configurator/configurator && dotnet run --urls="http://*:7201" && cd -'
 	alias fdmodelgen='cd $HOME/f/workspace/github/FDSimpleModelGenerator/FDSimpleModelGenerator && dotnet run --urls="http://*:7201" && cd -'
+	alias harness='cd $HOME/Application/ai/harness/deepseek-harness/ && pnpm dsh web'
 fi
 
 alias del='mv -t ~/.local/share/Trash/files/ --backup'
