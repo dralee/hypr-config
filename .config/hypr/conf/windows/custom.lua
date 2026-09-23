@@ -140,6 +140,11 @@ hl.window_rule({
     match = {initial_class = "qalculate"}
 })
 hl.window_rule({
+    name = "fluxnova-modeler",
+    float = true,
+    match = {initial_class = "fluxnova-modeler"}
+})
+hl.window_rule({
     name = "gwenview",
     float = true,
     match = {initial_class = "org.kde.gwenview" }
@@ -188,7 +193,7 @@ hl.window_rule({
 hl.window_rule({
     name = "libreoffice",
     float = true,
-    match = {initial_class = "libreoffice*" }
+    match = {initial_class = "libreoffice*|libreoffice-writer|libreoffice-draw|libreoffice-impress" }
 })
 hl.window_rule({
     name = "Typora",
@@ -254,6 +259,13 @@ hl.window_rule({
     float = true,
     match = {
         initial_class = "(nwg-look|qt6ct|flameshot)"
+    }
+})
+hl.window_rule({
+    name = "kvantum manager for qt theme",
+    float = true,
+    match = {
+        initial_class = "kvantummanager|kvantumpreview"
     }
 })
 hl.window_rule({
@@ -363,6 +375,13 @@ hl.window_rule({
 	}
 })
 
+hl.window_rule({
+	name = "pdf",
+    float = true,
+	match = {
+		initial_class = "org.kde.okular|org.pwmt.zathura",
+	}
+})
 
 -- dialog
 hl.window_rule({
