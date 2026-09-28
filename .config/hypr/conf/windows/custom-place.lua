@@ -14,7 +14,7 @@ hl.window_rule({
     name = "workspace4",
     workspace = 4,
     match = {
-        initial_class = "(code|Code|code-url-handler)"
+        initial_class = "(code|Code|code-url-handler|com.microsoft.VSCode)"
     }
 })
 hl.window_rule({

@@ -48,3 +48,10 @@ source ~/Application/shells/fish/y.sh
 source ~/Application/shells/fish/checkout-pull-git.sh
 source ~/Application/shells/fish/alias.sh
 
+
+# pnpm
+set -gx PNPM_HOME '/home/dralee/.local/share/pnpm'
+if not string match -q -- "$PNPM_HOME/bin" $PATH
+  set -gx PATH "$PNPM_HOME/bin" $PATH
+end
+# pnpm end

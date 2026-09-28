@@ -22,7 +22,7 @@ hl.window_rule({
     name = "code opacity rule",
     opacity = "0.9 0.95 0.9",
     match = { 
-        initial_class = "(Code|code)",
+        initial_class = "(Code|code|com.microsoft.VSCode)",
         initial_title = "Visual Studio Code"
     }
 })
@@ -105,7 +105,7 @@ hl.window_rule({
     float = true,
     match = {
         initial_class = "wechat",
-        initial_title = "(Photos and Videos|Chat History for Saved Groups|WeChat|)"
+        initial_title = "(Photos and Videos|Chat History for Saved Groups|WeChat|Weixin)"
     }
 })
 hl.window_rule({
