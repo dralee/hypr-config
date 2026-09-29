@@ -113,12 +113,19 @@ hl.window_rule({
     float = true,
     match = {initial_title = "(预览)"}
 })
+--hl.window_rule({
+--    name = "wechat tile",
+--    tile = true,
+--    match = {
+--        initial_class = "wechat",
+--        initial_title = "Weixin"
+--    }
+--})
 hl.window_rule({
-    name = "wechat tile",
-    tile = true,
+    name = "qBittorrent",
+    float = true,
     match = {
-        initial_class = "wechat",
-        initial_title = "Weixin"
+        initial_class = "org.qbittorrent.qBittorrent",
     }
 })
 hl.window_rule({
