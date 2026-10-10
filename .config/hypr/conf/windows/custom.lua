@@ -284,6 +284,13 @@ hl.window_rule({
     }
 })
 hl.window_rule({
+    name = "ILSpy",
+    float = true,
+    match = {
+        initial_class = "ILSpy"
+    }
+})
+hl.window_rule({
     name = "custom py",
     float = true,
     match = {
