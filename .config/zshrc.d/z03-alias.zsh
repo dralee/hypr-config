@@ -78,6 +78,7 @@ alias auto-upgrade-qq='$HOME/Application/shells/auto-upgrade-qq.sh'
 alias upgrade-redis-insight='$HOME/Application/shells/upgrade-redis-insight.sh'
 alias upgrade-rider='$HOME/Application/shells/jbr/upgrade-jbr.sh rider $HOME/Application/shells/jbr'
 alias vscode='code --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime'
+alias jetbrains-memory='$HOME/Application/shells/jetbrains-default-memory.sh'
 
 alias clean-bin='$HOME/Application/shells/net/clean-bin.sh'
 alias cg='$HOME/Application/shells/bash/cd-git.sh'
