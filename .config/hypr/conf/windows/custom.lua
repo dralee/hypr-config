@@ -206,7 +206,7 @@ hl.window_rule({
     name = "Typora",
     tile = true,
     match = {
-        initial_class = "Typora",
+        initial_class = "Typora|typora",
         initial_title = "^(Typora)$"
     }
 })

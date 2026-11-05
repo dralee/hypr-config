@@ -14,6 +14,7 @@ hl.bind(mainMod .. " + PERIOD", hl.dsp.exec_cmd("gucharmap"))
 
 -- shell
 hl.bind("ALT + G", hl.dsp.exec_cmd("$HOME/Application/shells/z9_pro.sh"))
+hl.bind("CTRL + G", hl.dsp.exec_cmd("$HOME/Application/shells/z9_pro_temp.sh"))
 -- 选择剪切历史
 hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd("cliphist list | rofi -dmenu | cliphist decode | wl-copy"))
 -- resize

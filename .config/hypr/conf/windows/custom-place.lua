@@ -35,7 +35,7 @@ hl.window_rule({
     name = "workspace6",
     workspace = 6,
     match = {
-        initial_class = "(Feishu|QQ|wechat|Typora)",
+        initial_class = "(Feishu|QQ|wechat|Typora|typora)",
     }
 })
 hl.window_rule({
