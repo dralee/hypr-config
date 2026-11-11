@@ -42,6 +42,7 @@ prepend_rules = [
 	{ url = "*.xls", use = [ "office" ] },
 	{ url = "*.xlsx", use = [ "office" ] },
 	{ url = "*.docx", use = [ "office" ] },
+	{ url = "*.doc", use = [ "office" ] },
 	{ url = "*.pptx", use = [ "office" ] },
 
 	# video

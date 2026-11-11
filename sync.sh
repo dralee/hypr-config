@@ -36,6 +36,7 @@ usr_dir=/usr
 firefox_default_chrome=$mozilla_dir/firefox/71ul370y.default-release/chrome
 yazi_dir=$config_dir/yazi
 zsh_dir=$config_dir/zshrc.d
+swappy_dir=$config_dir/swappy
 
 # file
 #hyprland_config=$hyprland_dir/hyprland.conf
@@ -76,6 +77,7 @@ mkdir -p $vim_dir
 mkdir -p $firefox_default_chrome
 mkdir -p $yazi_dir
 mkdir -p $zsh_dir
+mkdir -p $swappy_dir
 mkdir -p usr/zsh    
 mkdir -p $dralee_tool_dir
 
@@ -105,6 +107,7 @@ cp -r $HOME/$yazi_dir/. $yazi_dir
 #rsync -av --exclude '*/.git/' --exclude='*/.github/' $HOME/$vim_dir/. $vim_dir
 cp -r $HOME/$firefox_default_chrome/. $firefox_default_chrome
 cp -r $HOME/$zsh_dir/. $zsh_dir
+cp -r $HOME/$swappy_dir/. $swappy_dir
 cp -r $usr_zsh/. usr/zsh 
 cp -r $HOME/$dralee_tool_dir/. $dralee_tool_dir
 
