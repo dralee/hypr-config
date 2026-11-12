@@ -17,7 +17,7 @@ hl.window_rule({
     name = "workspace4",
     workspace = 4,
     match = {
-        initial_class = "(code|Code|code-url-handler)"
+        initial_class = "(code|Code|code-url-handler|com.microsoft.VSCode)"
     }
 })
 hl.window_rule({
@@ -38,7 +38,7 @@ hl.window_rule({
     name = "workspace7",
     workspace = 7,
     match = {
-        initial_class = "(Feishu|QQ|wechat|Typora)",
+        initial_class = "(Feishu|QQ|wechat|Typora|typora)",
     }
 })
 hl.window_rule({

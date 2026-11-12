@@ -147,6 +147,11 @@ hl.window_rule({
     match = {initial_class = "qalculate"}
 })
 hl.window_rule({
+    name = "qv4l2",
+    float = true,
+    match = {initial_class = "qv4l2" }
+})
+hl.window_rule({
     name = "fluxnova-modeler",
     float = true,
     match = {initial_class = "fluxnova-modeler"}
