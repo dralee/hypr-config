@@ -46,6 +46,9 @@ hl.bind("CTRL + ALT + E", hl.dsp.exec_cmd("grim -g \"$(slurp)\" - | swappy -f -"
 -- 微信截图
 hl.bind("ALT + A", hl.dsp.pass({window = "class:^(wechat)$"}))
 
+-- camera
+hl.bind("CTRL + ALT + C", hl.dsp.exec_cmd("QT_QPA_PLATFORM=xcb qv4l2"))
+
 -- record
 hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("notify-send \"start record\" \"recording to $HOME/Videos/record-xxxx.mp4\" && wf-recorder -g \"$(slurp)\" -f \"$HOME/Videos/record-`date +'%Y%m%d%H%M%S'`.mp4\""))
 hl.bind(mainMod .. " + SHIFT + D", hl.dsp.exec_cmd("pkill wf-recorder && notify-send \"finish\" \"record save in $HOME/Videos/record-`date +'%Y%m%d%H%M%S'`.mp4\""))
