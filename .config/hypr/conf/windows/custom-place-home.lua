@@ -6,7 +6,7 @@ hl.window_rule({
     workspace = 2,
     match = {
         initial_class = "jetbrains-rider",
-        initial_title = "(Welcome to JetBrains Rider)"
+		-- initial_title = "(Welcome to JetBrains Rider)"
     }
 })
 hl.window_rule({
