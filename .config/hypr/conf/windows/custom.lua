@@ -27,6 +27,13 @@ hl.window_rule({
     }
 })
 hl.window_rule({
+    name = "z9ai opacity rule",
+    opacity = "0.9 0.95 0.9",
+    match = { 
+        initial_class = "(z9ai)",
+    }
+})
+hl.window_rule({
     name = "code opacity rule",
     opacity = "0.9 0.95 0.9",
     match = {
@@ -140,6 +147,12 @@ hl.window_rule({
     name = "drawing",
     float = true,
     match = {initial_class = "com.github.maoschanz.drawing"}
+})
+
+hl.window_rule({
+    name = "ai tools",
+    float = true,
+    match = {initial_class = "LocModel"}
 })
 hl.window_rule({
     name = "qalculate",

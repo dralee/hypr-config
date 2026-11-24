@@ -21,6 +21,13 @@ hl.window_rule({
     }
 })
 hl.window_rule({
+    name = "workspace4",
+    workspace = 4,
+    match = {
+        class = "z9ai"
+    }
+})
+hl.window_rule({
     name = "workspace5",
     workspace = 5,
     match = {        
@@ -31,7 +38,7 @@ hl.window_rule({
     name = "workspace6",
     workspace = 6,
     match = {
-        initial_class = "jetbrains-datagrip"
+        initial_class = "jetbrains-datagrip|LocModel"
     }
 })
 hl.window_rule({
